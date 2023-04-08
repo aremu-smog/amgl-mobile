@@ -1,20 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar"
+import { SafeAreaView, StyleSheet, Text, View } from "react-native"
+import Navigator from "./src/navigation"
+import { AuthContextProvider } from "./src/context/auth.context"
+import { useFonts } from "expo-font"
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	// useFonts({
+	//   'Graphik': require
+	// })
+	return (
+		<AuthContextProvider>
+			{/* <SafeAreaView> */}
+			<Navigator />
+			{/* </SafeAreaView> */}
+		</AuthContextProvider>
+	)
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	container: {
+		flex: 1,
+		backgroundColor: "#fff",
+		alignItems: "center",
+		justifyContent: "center",
+	},
+})

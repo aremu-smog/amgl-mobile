@@ -14,25 +14,23 @@ export const AuthContextProvider = ({ children }) => {
 		if (!currentSession) {
 			setCurrentSession(session)
 			const { user } = session ?? {}
-			const { email, user_metadata } = user ?? {}
+			const { email, id, user_metadata } = user ?? {}
 			const { username } = user_metadata ?? {}
 
 			setUser({
 				email,
 				username,
+				id,
 			})
 		}
 	}
 	useEffect(() => {
 		// return async () => {
 		supabaseApp.auth.getSession().then(({ data: { session } }) => {
-			console.log("Gotten session")
 			getUserDataFromSession(session)
 		})
 
 		supabaseApp.auth.onAuthStateChange((e, session) => {
-			console.log("Auth changed")
-			console.log({ session })
 			if (session) {
 				console.log("Has session")
 				getUserDataFromSession(session)

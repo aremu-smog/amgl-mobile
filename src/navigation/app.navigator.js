@@ -9,7 +9,6 @@ const AppStack = createMaterialTopTabNavigator()
 const AppNavigator = () => {
 	return (
 		<AppStack.Navigator
-			swipeEnabled={false}
 			screenOptions={{
 				tabBarIndicator: () => null,
 				tabBarLabelStyle: {

@@ -1,4 +1,4 @@
-import { View, Text } from "react-native"
+import { View, Text, SafeAreaView } from "react-native"
 import { useEffect, useState, useRef } from "react"
 import Carousel from "react-native-snap-carousel"
 
@@ -12,8 +12,7 @@ const PlayScreen = () => {
 	const { user } = useAuthContext()
 	const { username } = user ?? {}
 
-	const fetchQuestions = async () => {
-		supabaseApp
+	const fetchQuestions = async _username => {
 		const { data, error } = await supabaseApp
 			.from("questions")
 			.select("id,slug,description")
@@ -21,7 +20,7 @@ const PlayScreen = () => {
 		if (data) {
 			const transformedData = await data.map(question => {
 				const { slug } = question
-				const url = `amgl.link/${username}/${slug}`
+				const url = `amgl.link/${_username}/${slug}`
 				return {
 					...question,
 					url,
@@ -34,10 +33,9 @@ const PlayScreen = () => {
 		}
 	}
 	useEffect(() => {
-		fetchQuestions()
-	}, [])
+		fetchQuestions(username)
+	}, [username])
 
-	console.log(questions)
 	const isCarousel = useRef(null)
 	return (
 		<>
@@ -47,7 +45,6 @@ const PlayScreen = () => {
 					ref={isCarousel}
 					data={questions}
 					renderItem={QuestionComponent}
-					useScrollView={true}
 					sliderWidth={SLIDER_WIDTH}
 					itemWidth={ITEM_WIDTH}
 					layoutCardOffset={0}

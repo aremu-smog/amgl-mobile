@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Dimensions, Pressable } from "react-native"
 import * as Clipboard from "expo-clipboard"
 import { useAuthContext } from "../../../context/auth.context"
+import { useState } from "react"
 const QuestionComponent = ({ item, index }) => {
 	const { slug, description, url } = item
 
@@ -17,19 +18,29 @@ const QuestionComponent = ({ item, index }) => {
 					<Text style={styles.descriptionText}>{description}</Text>
 				</View>
 			</View>
-			<View style={infoStyles.container}>
-				<Text style={infoStyles.instruction}>Instruction: Copy your link</Text>
 
-				<Text style={infoStyles.url}>{url}</Text>
+			<InfoSection url={url} />
+		</View>
+	)
+}
 
-				<Pressable
-					style={infoStyles.copyButton}
-					onPress={() => {
-						copyToClipboard(url)
-					}}>
-					<Text style={infoStyles.copyButtonText}>copy Link</Text>
-				</Pressable>
-			</View>
+const InfoSection = ({ url }) => {
+	const [isPressed, setIsPressed] = useState(false)
+	return (
+		<View style={infoStyles.container}>
+			<Text style={infoStyles.instruction}>Instruction: Copy your link</Text>
+
+			<Text style={infoStyles.url}>{url}</Text>
+
+			<Pressable
+				style={[infoStyles.copyButton, isPressed && infoStyles.fade]}
+				onPress={() => {
+					copyToClipboard(url)
+				}}
+				onPressIn={() => setIsPressed(true)}
+				onPressOut={() => setIsPressed(false)}>
+				<Text style={infoStyles.copyButtonText}>copy Link</Text>
+			</Pressable>
 		</View>
 	)
 }
@@ -124,6 +135,10 @@ const infoStyles = StyleSheet.create({
 		borderRadius: 28,
 		alignItems: "center",
 		justifyContent: "center",
+	},
+
+	fade: {
+		opacity: 0.5,
 	},
 	copyButtonText: {
 		fontWeight: "700",

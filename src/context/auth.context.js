@@ -11,42 +11,43 @@ export const AuthContextProvider = ({ children }) => {
 	const [currentSession, setCurrentSession] = useState(null)
 
 	const getUserDataFromSession = session => {
-		setCurrentSession(session)
-		const { user } = session
-		const { email, user_metadata } = user
-		const { username } = user_metadata
-		setUser({
-			email,
-			username,
-		})
+		if (!currentSession) {
+			setCurrentSession(session)
+			const { user } = session ?? {}
+			const { email, user_metadata } = user ?? {}
+			const { username } = user_metadata ?? {}
+
+			setUser({
+				email,
+				username,
+			})
+		}
 	}
 	useEffect(() => {
+		// return async () => {
 		supabaseApp.auth.getSession().then(({ data: { session } }) => {
+			console.log("Gotten session")
 			getUserDataFromSession(session)
 		})
 
 		supabaseApp.auth.onAuthStateChange((e, session) => {
+			console.log("Auth changed")
+			console.log({ session })
 			if (session) {
+				console.log("Has session")
 				getUserDataFromSession(session)
 			}
 		})
+		// }
 	}, [])
 
 	console.log({ currentSession })
 	const login = async (email, password) => {
+		console.log("Login....")
 		const { error } = await supabaseApp.auth.signInWithPassword({
 			email,
 			password,
 		})
-
-		if (data) {
-			const { user } = data
-			const { email } = user
-			setUser({
-				email,
-			})
-			console.log(data)
-		}
 
 		if (error) {
 			console.error(error)

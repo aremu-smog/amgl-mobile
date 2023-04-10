@@ -10,7 +10,8 @@ import { useAuthContext } from "../../context/auth.context"
 const PlayScreen = () => {
 	const [questions, setQuestions] = useState([])
 	const { user } = useAuthContext()
-	console.log({ user })
+	const { username } = user ?? {}
+
 	const fetchQuestions = async () => {
 		supabaseApp
 		const { data, error } = await supabaseApp
@@ -20,7 +21,7 @@ const PlayScreen = () => {
 		if (data) {
 			const transformedData = await data.map(question => {
 				const { slug } = question
-				const url = `amgl.link/${user?.username}/${slug}`
+				const url = `amgl.link/${username}/${slug}`
 				return {
 					...question,
 					url,

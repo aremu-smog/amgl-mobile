@@ -7,11 +7,19 @@ import { LinearGradient } from "expo-linear-gradient"
 const LoginScreen = ({ navigation }) => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
+	const [isLoading, setIsLoading] = useState(false)
 
-	const { user, login } = useAuthContext()
+	const { login } = useAuthContext()
 
 	const onLogin = async () => {
-		await login(email, password)
+		setIsLoading(true)
+		try {
+			await login(email, password)
+		} catch (e) {
+			console.warn(e)
+		} finally {
+			setIsLoading(false)
+		}
 	}
 
 	const navigateToRegisterScreen = () => {
@@ -30,12 +38,12 @@ const LoginScreen = ({ navigation }) => {
 				/>
 				<Input
 					placeholder='Password'
-					inputMode='email'
+					autoCapitalize='none'
+					inputMode='text'
 					secureTextEntry={true}
 					onChangeText={setPassword}
-					keyboardType='email-address'
 				/>
-				<Button text='Login' onPress={onLogin} />
+				<Button text='Login' onPress={onLogin} isLoading={isLoading} />
 				<View style={styles.info}>
 					<Text style={{ textAlign: "center", justifyContent: "center" }}>
 						Don't have an account yet?

@@ -1,18 +1,22 @@
 import { useState } from "react"
 import { Pressable, Text, StyleSheet } from "react-native"
 
-const Button = ({ text, ...props }) => {
+const Button = ({ text, isLoading, ...props }) => {
 	const [isPressed, setIsPressed] = useState(false)
 	return (
 		<Pressable
-			style={[styles.container, isPressed && styles.pressIn]}
+			style={[
+				styles.container,
+				isPressed && styles.pressIn,
+				isLoading && styles.isDisabled,
+			]}
 			onPress={() => {
 				alert("Button!")
 			}}
 			onPressIn={() => setIsPressed(true)}
 			onPressOut={() => setIsPressed(false)}
 			{...props}>
-			<Text style={styles.text}>{text}</Text>
+			<Text style={styles.text}>{isLoading ? "Loading..." : text}</Text>
 		</Pressable>
 	)
 }
@@ -30,6 +34,9 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 	},
 	pressIn: {
+		opacity: 0.5,
+	},
+	isDisabled: {
 		opacity: 0.5,
 	},
 })

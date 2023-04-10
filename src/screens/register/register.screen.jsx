@@ -9,7 +9,7 @@ const RegisterScreen = () => {
 	const [password, setPassword] = useState("")
 	const [username, setUsername] = useState("")
 
-	const { user, register } = useAuthContext()
+	const { register } = useAuthContext()
 
 	const onRegister = async () => {
 		await register(email, password, username)

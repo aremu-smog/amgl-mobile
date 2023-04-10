@@ -20,7 +20,7 @@ const PlayScreen = () => {
 		if (data) {
 			const transformedData = await data.map(question => {
 				const { slug } = question
-				const url = `amgl.link/${_username}/${slug}`
+				const url = `${process.env.REACT_APP_WEBSITE_BASE_URL}/${_username}/${slug}`
 				return {
 					...question,
 					url,

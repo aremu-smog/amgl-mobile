@@ -7,68 +7,98 @@ const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
 	const [user, setUser] = useState(null)
+	const [isReadyToLogin, setIsReadyToLogin] = useState(false)
 
 	const [currentSession, setCurrentSession] = useState(null)
 
-	const getUserDataFromSession = session => {
+	const getUserDataFromSession = async session => {
 		if (!currentSession) {
 			setCurrentSession(session)
 			const { user } = session ?? {}
-			const { email, id, user_metadata } = user ?? {}
-			const { username } = user_metadata ?? {}
+			const { email, id } = user ?? {}
 
-			setUser({
-				email,
-				username,
-				id,
-			})
+			const { data, error } = await supabaseApp
+				.from("user_alias")
+				.select("name")
+				.eq("user_id", id)
+
+			if (data) {
+				const userAlias = data[0]
+
+				const username = userAlias.name
+
+				setUser({
+					email,
+					username,
+					id,
+				})
+			}
+
+			if (error) {
+				console.warn(error)
+			}
 		}
 	}
 	useEffect(() => {
-		// return async () => {
-		supabaseApp.auth.getSession().then(({ data: { session } }) => {
-			getUserDataFromSession(session)
-		})
-
-		supabaseApp.auth.onAuthStateChange((e, session) => {
-			if (session) {
-				console.log("Has session")
+		console.log("Not ready")
+		if (isReadyToLogin) {
+			console.log("Ready to log in")
+			supabaseApp.auth.getSession().then(({ data: { session } }) => {
 				getUserDataFromSession(session)
-			}
-		})
-		// }
-	}, [])
+			})
 
-	console.log({ currentSession })
+			supabaseApp.auth.onAuthStateChange((e, session) => {
+				if (session) {
+					getUserDataFromSession(session)
+				}
+			})
+		}
+	}, [isReadyToLogin])
+
 	const login = async (email, password) => {
-		console.log("Login....")
-		const { error } = await supabaseApp.auth.signInWithPassword({
+		const { data, error } = await supabaseApp.auth.signInWithPassword({
 			email,
 			password,
 		})
 
+		if (data) {
+			setIsReadyToLogin(true)
+		}
 		if (error) {
 			console.error(error)
 		}
 	}
 
 	const register = async (email, password, username) => {
-		const { data, error } = await supabaseApp.auth.signUp({
-			email,
-			password,
-			options: {
-				data: {
-					username,
-				},
-			},
-		})
+		const { data: signUpData, error: signUpError } =
+			await supabaseApp.auth.signUp({
+				email,
+				password,
+			})
 
-		if (data) {
-			console.log({ data })
+		if (signUpData) {
+			console.log({ signUpData })
+
+			const { user } = signUpData
+			const { data, error } = await supabaseApp
+				.from("user_alias")
+				.insert({
+					user_id: user.id,
+					name: username,
+				})
+				.select()
+
+			if (data) {
+				setIsReadyToLogin(true)
+				console.log("User alias created")
+			}
+			if (error) {
+				console.error(error)
+			}
 		}
 
-		if (error) {
-			console.error(error)
+		if (signUpError) {
+			console.error(signUpError)
 		}
 	}
 	return (

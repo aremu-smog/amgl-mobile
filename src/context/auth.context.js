@@ -40,9 +40,7 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	}
 	useEffect(() => {
-		console.log("Not ready")
 		if (isReadyToLogin) {
-			console.log("Ready to log in")
 			supabaseApp.auth.getSession().then(({ data: { session } }) => {
 				getUserDataFromSession(session)
 			})

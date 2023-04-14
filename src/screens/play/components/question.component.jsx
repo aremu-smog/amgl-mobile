@@ -58,10 +58,11 @@ const emojis = {
 
 const BORDER_RADIUS_VALUE = 24
 export const SLIDER_WIDTH = Dimensions.get("window").width
-export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8)
+export const ITEM_WIDTH = SLIDER_WIDTH
 const styles = StyleSheet.create({
 	wrapper: {
 		width: ITEM_WIDTH,
+		paddingHorizontal: 20,
 	},
 	container: {
 		borderRadius: BORDER_RADIUS_VALUE,
@@ -95,7 +96,8 @@ const styles = StyleSheet.create({
 	description: {
 		borderBottomStartRadius: BORDER_RADIUS_VALUE,
 		borderBottomEndRadius: BORDER_RADIUS_VALUE,
-		padding: 20,
+		paddingHorizontal: 30,
+		paddingVertical: 25,
 		backgroundColor: "white",
 	},
 	descriptionText: {

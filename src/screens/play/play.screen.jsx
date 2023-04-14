@@ -1,6 +1,6 @@
 import { View, Text, SafeAreaView } from "react-native"
 import { useEffect, useState, useRef } from "react"
-import Carousel from "react-native-snap-carousel"
+import Carousel from "react-native-reanimated-carousel"
 
 import { supabaseApp } from "../../api/supabase"
 import { QuestionComponent } from "./components"
@@ -41,14 +41,13 @@ const PlayScreen = () => {
 		<>
 			{questions ? (
 				<Carousel
-					layout='default'
-					ref={isCarousel}
+					loop
+					showLength
 					data={questions}
 					renderItem={QuestionComponent}
-					sliderWidth={SLIDER_WIDTH}
-					itemWidth={ITEM_WIDTH}
-					layoutCardOffset={0}
-					inactiveSlideShift={0}
+					pagingEnabled={true}
+					width={SLIDER_WIDTH}
+					enabled
 				/>
 			) : (
 				<View>

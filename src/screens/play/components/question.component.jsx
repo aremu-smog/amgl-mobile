@@ -38,7 +38,11 @@ const InfoSection = ({ url }) => {
 					copyToClipboard(url)
 				}}
 				onPressIn={() => setIsPressed(true)}
-				onPressOut={() => setIsPressed(false)}>
+				onPressOut={() => {
+					setTimeout(() => {
+						setIsPressed(false)
+					}, 500)
+				}}>
 				<Text style={infoStyles.copyButtonText}>copy Link</Text>
 			</Pressable>
 		</View>

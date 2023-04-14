@@ -11,11 +11,13 @@ export const AuthContextProvider = ({ children }) => {
 
 	const [currentSession, setCurrentSession] = useState(null)
 
-	const getUserDataFromSession = async session => {
+	const getUserDataFromSession = async (session, loggedInUser) => {
 		if (!currentSession) {
 			setCurrentSession(session)
 			const { user } = session ?? {}
-			const { email, id } = user ?? {}
+			const { email, id } = loggedInUser ?? user ?? {}
+
+			console.log({ user })
 
 			const { data, error } = await supabaseApp
 				.from("user_alias")
@@ -24,7 +26,6 @@ export const AuthContextProvider = ({ children }) => {
 
 			if (data) {
 				const userAlias = data[0]
-
 				const username = userAlias.name
 
 				setUser({
@@ -40,18 +41,16 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	}
 	useEffect(() => {
-		if (isReadyToLogin) {
-			supabaseApp.auth.getSession().then(({ data: { session } }) => {
-				getUserDataFromSession(session)
-			})
+		supabaseApp.auth.getSession().then(({ data: { session } }) => {
+			getUserDataFromSession(session)
+		})
 
-			supabaseApp.auth.onAuthStateChange((e, session) => {
-				if (session) {
-					getUserDataFromSession(session)
-				}
-			})
-		}
-	}, [isReadyToLogin])
+		supabaseApp.auth.onAuthStateChange((e, session) => {
+			if (session) {
+				getUserDataFromSession(session)
+			}
+		})
+	}, [])
 
 	const login = async (email, password) => {
 		const { data, error } = await supabaseApp.auth.signInWithPassword({
@@ -75,8 +74,6 @@ export const AuthContextProvider = ({ children }) => {
 			})
 
 		if (signUpData) {
-			console.log({ signUpData })
-
 			const { user } = signUpData
 			const { data, error } = await supabaseApp
 				.from("user_alias")
@@ -87,7 +84,6 @@ export const AuthContextProvider = ({ children }) => {
 				.select()
 
 			if (data) {
-				setIsReadyToLogin(true)
 				console.log("User alias created")
 			}
 			if (error) {

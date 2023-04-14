@@ -10,7 +10,6 @@ const statusBarHeight = StatusBar.currentHeight
 const IS_ANDROID = Platform.OS === "android"
 const verticalPadding = IS_ANDROID ? statusBarHeight : 0
 
-console.log({ statusBarHeight })
 export default function App() {
 	// useFonts({
 	//   'Graphik': require

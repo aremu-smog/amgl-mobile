@@ -14,7 +14,6 @@ const AppNavigator = () => {
 				tabBarLabelStyle: {
 					fontSize: 18,
 					fontWeight: "bold",
-					textTransform: "none",
 				},
 				swipeEnabled: false,
 				tabBarAndroidRipple: false,

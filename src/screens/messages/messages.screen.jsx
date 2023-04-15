@@ -11,10 +11,12 @@ import {
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
+import { useQuestionsContext } from "../../context/questions.context"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
 const MessagesScreen = ({ navigation }) => {
 	const { user } = useAuthContext()
+	const { questions } = useQuestionsContext()
 	const [messages, setMessages] = useState([])
 
 	const fetchResponses = async () => {
@@ -31,8 +33,17 @@ const MessagesScreen = ({ navigation }) => {
 		}
 	}
 
-	const gotoDetailsPage = () => {
-		navigation.navigate("MessageDetails")
+	const gotoDetailsPage = item => {
+		const { question_id, details } = item
+
+		const responseQuestion = questions.find(
+			_question => _question.id === question_id
+		)
+
+		navigation.navigate("MessageDetails", {
+			question: responseQuestion.description,
+			response: details,
+		})
 	}
 	useEffect(() => {
 		console.log("Component mounted")
@@ -50,7 +61,7 @@ const MessagesScreen = ({ navigation }) => {
 				const viewedColor = "rgba(0,0,0,0.1)"
 
 				return (
-					<TouchableOpacity onPress={gotoDetailsPage}>
+					<TouchableOpacity onPress={() => gotoDetailsPage(item)}>
 						<LinearGradient
 							colors={[
 								viewed ? viewedColor : "#ec1187",

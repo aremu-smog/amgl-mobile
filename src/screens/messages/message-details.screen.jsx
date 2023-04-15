@@ -1,10 +1,16 @@
 import { View, Text, StyleSheet } from "react-native"
 import { ResponseComponent } from "./components"
+import { useRoute } from "@react-navigation/native"
 
-const MessageDetailsScreen = () => {
+const MessageDetailsScreen = ({}) => {
+	const route = useRoute()
+
+	const { params = {} } = route
+
+	const { question, response } = params
 	return (
 		<View style={styles.wrapper}>
-			<ResponseComponent />
+			<ResponseComponent question={question} answer={response} />
 		</View>
 	)
 }

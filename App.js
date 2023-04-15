@@ -4,6 +4,7 @@ import Navigator from "./src/navigation"
 import { AuthContextProvider } from "./src/context/auth.context"
 import { useFonts } from "expo-font"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
+import QuestionsContextProvider from "./src/context/questions.context"
 
 const statusBarHeight = StatusBar.currentHeight
 
@@ -18,7 +19,9 @@ export default function App() {
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<SafeAreaView style={{ flex: 1, marginTop: verticalPadding }}>
 				<AuthContextProvider>
-					<Navigator />
+					<QuestionsContextProvider>
+						<Navigator />
+					</QuestionsContextProvider>
 				</AuthContextProvider>
 			</SafeAreaView>
 		</GestureHandlerRootView>

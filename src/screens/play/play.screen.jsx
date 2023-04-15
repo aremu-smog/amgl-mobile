@@ -6,9 +6,11 @@ import { supabaseApp } from "../../api/supabase"
 import { QuestionComponent } from "./components"
 import { ITEM_WIDTH, SLIDER_WIDTH } from "./components/question.component"
 import { useAuthContext } from "../../context/auth.context"
+import { useQuestionsContext } from "../../context/questions.context"
 
 const PlayScreen = () => {
-	const [questions, setQuestions] = useState([])
+	const { questions, setQuestions } = useQuestionsContext()
+
 	const { user } = useAuthContext()
 	const { username } = user ?? {}
 
@@ -36,6 +38,7 @@ const PlayScreen = () => {
 		fetchQuestions(username)
 	}, [username])
 
+	const isCarousel = useRef(null)
 	return (
 		<>
 			{questions ? (

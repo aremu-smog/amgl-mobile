@@ -22,12 +22,12 @@ const QuestionComponent = ({ item, index }) => {
 				</View>
 			</View>
 
-			<InfoSection url={url} />
+			<InfoSection url={url} color={primary_color} />
 		</View>
 	)
 }
 
-const InfoSection = ({ url }) => {
+const InfoSection = ({ url, color }) => {
 	const [isPressed, setIsPressed] = useState(false)
 	return (
 		<View style={infoStyles.container}>
@@ -36,7 +36,13 @@ const InfoSection = ({ url }) => {
 			<Text style={infoStyles.url}>{url}</Text>
 
 			<Pressable
-				style={[infoStyles.copyButton, isPressed && infoStyles.fade]}
+				style={[
+					infoStyles.copyButton,
+					isPressed && infoStyles.fade,
+					{
+						borderColor: color,
+					},
+				]}
 				onPress={() => {
 					copyToClipboard(url)
 				}}
@@ -46,7 +52,15 @@ const InfoSection = ({ url }) => {
 						setIsPressed(false)
 					}, 500)
 				}}>
-				<Text style={infoStyles.copyButtonText}>copy Link</Text>
+				<Text
+					style={[
+						infoStyles.copyButtonText,
+						{
+							color: color,
+						},
+					]}>
+					copy Link
+				</Text>
 			</Pressable>
 		</View>
 	)

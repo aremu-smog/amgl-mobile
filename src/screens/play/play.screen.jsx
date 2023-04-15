@@ -36,7 +36,6 @@ const PlayScreen = () => {
 		fetchQuestions(username)
 	}, [username])
 
-	const isCarousel = useRef(null)
 	return (
 		<>
 			{questions ? (

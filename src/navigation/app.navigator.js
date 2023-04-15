@@ -4,6 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { StatusBar } from "expo-status-bar"
 import { SafeAreaView, Text, View } from "react-native"
 import { MessagesScreen, PlayScreen } from "../screens"
+import MessagesNavigator from "./messages.navigator"
 const AppStack = createMaterialTopTabNavigator()
 
 const AppNavigator = () => {
@@ -20,7 +21,7 @@ const AppNavigator = () => {
 				tabBarGap: 5,
 			}}>
 			<AppStack.Screen name='Play' component={PlayScreen} />
-			<AppStack.Screen name='Messages' component={MessagesScreen} />
+			<AppStack.Screen name='Messages' component={MessagesNavigator} />
 		</AppStack.Navigator>
 	)
 }

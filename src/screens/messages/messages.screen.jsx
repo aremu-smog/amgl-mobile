@@ -6,13 +6,14 @@ import {
 	StyleSheet,
 	Image,
 	FlatList,
+	TouchableOpacity,
 } from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
-const MessagesScreen = () => {
+const MessagesScreen = ({ navigation }) => {
 	const { user } = useAuthContext()
 	const [messages, setMessages] = useState([])
 
@@ -28,6 +29,10 @@ const MessagesScreen = () => {
 		if (error) {
 			console.warn(error)
 		}
+	}
+
+	const gotoDetailsPage = () => {
+		navigation.navigate("MessageDetails")
 	}
 	useEffect(() => {
 		console.log("Component mounted")
@@ -45,24 +50,26 @@ const MessagesScreen = () => {
 				const viewedColor = "rgba(0,0,0,0.1)"
 
 				return (
-					<LinearGradient
-						colors={[
-							viewed ? viewedColor : "#ec1187",
-							viewed ? viewedColor : "#ff8d10",
-						]}
-						key={item.id}
-						style={{
-							...styles.item,
-						}}>
-						<Image
-							source={loveIconSrc}
+					<TouchableOpacity onPress={gotoDetailsPage}>
+						<LinearGradient
+							colors={[
+								viewed ? viewedColor : "#ec1187",
+								viewed ? viewedColor : "#ff8d10",
+							]}
+							key={item.id}
 							style={{
-								width: 60,
-								height: 60,
-								opacity: viewed ? 0.7 : 1,
-							}}
-						/>
-					</LinearGradient>
+								...styles.item,
+							}}>
+							<Image
+								source={loveIconSrc}
+								style={{
+									width: 60,
+									height: 60,
+									opacity: viewed ? 0.7 : 1,
+								}}
+							/>
+						</LinearGradient>
+					</TouchableOpacity>
 				)
 			}}
 		/>

@@ -1,0 +1,20 @@
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { MessagesScreen, MessageDetailsScreen } from "../screens"
+
+const MessageStack = createNativeStackNavigator()
+const MessagesNavigator = () => {
+	return (
+		<MessageStack.Navigator
+			screenOptions={{
+				headerShown: false,
+			}}>
+			<MessageStack.Screen name='MessagesList' component={MessagesScreen} />
+			<MessageStack.Screen
+				name='MessageDetails'
+				component={MessageDetailsScreen}
+			/>
+		</MessageStack.Navigator>
+	)
+}
+
+export default MessagesNavigator

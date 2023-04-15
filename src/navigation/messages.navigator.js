@@ -9,10 +9,6 @@ const MessagesNavigator = () => {
 				headerShown: false,
 			}}>
 			<MessageStack.Screen name='MessagesList' component={MessagesScreen} />
-			<MessageStack.Screen
-				name='MessageDetails'
-				component={MessageDetailsScreen}
-			/>
 		</MessageStack.Navigator>
 	)
 }

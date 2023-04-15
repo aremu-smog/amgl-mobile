@@ -1,17 +1,10 @@
-import { useEffect, useState } from "react"
-import {
-	View,
-	Text,
-	ScrollView,
-	StyleSheet,
-	Image,
-	FlatList,
-	TouchableOpacity,
-} from "react-native"
+import { useEffect, useCallback, useState } from "react"
+import { StyleSheet, Image, FlatList, TouchableOpacity } from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useQuestionsContext } from "../../context/questions.context"
+import { useFocusEffect } from "@react-navigation/native"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
 const MessagesScreen = ({ navigation }) => {
@@ -45,10 +38,12 @@ const MessagesScreen = ({ navigation }) => {
 			response: details,
 		})
 	}
-	useEffect(() => {
-		console.log("Component mounted")
-		fetchResponses()
-	}, [user])
+
+	useFocusEffect(
+		useCallback(() => {
+			fetchResponses()
+		}, [user])
+	)
 
 	return (
 		<FlatList

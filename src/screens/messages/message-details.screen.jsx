@@ -1,17 +1,29 @@
-import { View, Text, StyleSheet } from "react-native"
+import { View, Text, StyleSheet, Pressable, SafeAreaView } from "react-native"
 import { ResponseComponent } from "./components"
-import { useRoute } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 const MessageDetailsScreen = ({}) => {
 	const route = useRoute()
+	const navigation = useNavigation()
 
 	const { params = {} } = route
 
 	const { question, response } = params
+	const goBack = () => {
+		navigation.goBack()
+	}
 	return (
-		<View style={styles.wrapper}>
-			<ResponseComponent question={question} answer={response} />
-		</View>
+		<SafeAreaView style={{ flex: 1 }}>
+			<View style={styles.wrapper}>
+				<View>
+					<Pressable onPress={goBack}>
+						<Text>Back</Text>
+					</Pressable>
+				</View>
+				<ResponseComponent question={question} answer={response} />
+				<View></View>
+			</View>
+		</SafeAreaView>
 	)
 }
 
@@ -20,7 +32,7 @@ export default MessageDetailsScreen
 const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
-		justifyContent: "center",
+		justifyContent: "space-between",
 		paddingHorizontal: 20,
 	},
 })

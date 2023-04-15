@@ -1,13 +1,20 @@
-import { View, StyleSheet, Text } from "react-native"
+import { View, StyleSheet, Text, Pressable } from "react-native"
 import { Button, Input } from "../../components"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
+import { useNavigation } from "@react-navigation/native"
 
 const RegisterScreen = () => {
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("")
 	const [username, setUsername] = useState("")
+
+	const navigation = useNavigation()
+
+	const gotoLoginScreen = () => {
+		navigation.navigate("Login")
+	}
 
 	const { register } = useAuthContext()
 
@@ -39,9 +46,15 @@ const RegisterScreen = () => {
 				/>
 				<Button text='Sign up' onPress={onRegister} />
 				<View style={styles.info}>
-					<Text style={{ textAlign: "center" }}>
-						Already have an account? Login
-					</Text>
+					<Text style={{ textAlign: "center" }}>Already have an account? </Text>
+					<Pressable onPress={gotoLoginScreen}>
+						<Text
+							style={{
+								fontWeight: "bold",
+							}}>
+							Login
+						</Text>
+					</Pressable>
 				</View>
 			</LinearGradient>
 		</View>
@@ -63,6 +76,8 @@ const styles = StyleSheet.create({
 
 	info: {
 		marginTop: 20,
+		flexDirection: "row",
+		justifyContent: "center",
 	},
 })
 

@@ -46,11 +46,16 @@ const LoginScreen = ({ navigation }) => {
 				<Button text='Login' onPress={onLogin} isLoading={isLoading} />
 				<View style={styles.info}>
 					<Text style={{ textAlign: "center", justifyContent: "center" }}>
-						Don't have an account yet?
-						<Pressable onPress={navigateToRegisterScreen}>
-							<Text>Register</Text>
-						</Pressable>
+						Don't have an account yet?{" "}
 					</Text>
+					<Pressable onPress={navigateToRegisterScreen} hitSlop={5}>
+						<Text
+							style={{
+								fontWeight: "bold",
+							}}>
+							Register
+						</Text>
+					</Pressable>
 				</View>
 			</LinearGradient>
 		</View>
@@ -72,6 +77,8 @@ const styles = StyleSheet.create({
 
 	info: {
 		marginTop: 20,
+		flexDirection: "row",
+		justifyContent: "center",
 	},
 })
 

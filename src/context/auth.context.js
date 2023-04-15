@@ -17,8 +17,6 @@ export const AuthContextProvider = ({ children }) => {
 			const { user } = session ?? {}
 			const { email, id } = loggedInUser ?? user ?? {}
 
-			console.log({ user })
-
 			const { data, error } = await supabaseApp
 				.from("user_alias")
 				.select("name")

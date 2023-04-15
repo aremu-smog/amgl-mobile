@@ -17,6 +17,9 @@ const MessagesScreen = ({ navigation }) => {
 			.from("responses")
 			.select("id, question_id, details, viewed")
 			.eq("user_id", user.id)
+			.order("viewed", {
+				ascending: true,
+			})
 
 		if (data) {
 			setMessages(data)
@@ -26,14 +29,27 @@ const MessagesScreen = ({ navigation }) => {
 		}
 	}
 
-	const gotoDetailsPage = item => {
-		const { question_id, details } = item
+	const gotoDetailsPage = async item => {
+		const { id, question_id, details, viewed } = item
 
-		const responseQuestion = questions.find(
+		const responseQuestion = await questions.find(
 			_question => _question.id === question_id
 		)
 
-		navigation.navigate("MessageDetails", {
+		if (!viewed) {
+			const { data, error } = await supabaseApp
+				.from("responses")
+				.update({
+					viewed: true,
+				})
+				.eq("id", id)
+
+			if (error) {
+				console.error({ error })
+			}
+		}
+
+		await navigation.navigate("MessageDetails", {
 			question: responseQuestion.description,
 			response: details,
 		})

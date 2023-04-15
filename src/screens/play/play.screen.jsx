@@ -39,7 +39,10 @@ const PlayScreen = () => {
 	}, [username])
 
 	return (
-		<>
+		<View
+			style={{
+				paddingTop: 30,
+			}}>
 			{questions ? (
 				<Carousel
 					loop
@@ -55,7 +58,7 @@ const PlayScreen = () => {
 					<Text>Loading...</Text>
 				</View>
 			)}
-		</>
+		</View>
 	)
 }
 

@@ -15,7 +15,13 @@ const AppNavigator = () => {
 				headerShown: false,
 			}}>
 			<AppStack.Screen name='Tabs' component={TabScreens} />
-			<AppStack.Screen name='MessageDetails' component={MessageDetailsScreen} />
+			<AppStack.Screen
+				name='MessageDetails'
+				options={{
+					presentation: "fullScreenModal",
+				}}
+				component={MessageDetailsScreen}
+			/>
 		</AppStack.Navigator>
 	)
 }

@@ -17,7 +17,7 @@ const PlayScreen = () => {
 	const fetchQuestions = async _username => {
 		const { data, error } = await supabaseApp
 			.from("questions")
-			.select("id,slug,description")
+			.select("id,slug,description,primary_color,secondary_color")
 
 		if (data) {
 			const transformedData = await data.map(question => {
@@ -38,7 +38,6 @@ const PlayScreen = () => {
 		fetchQuestions(username)
 	}, [username])
 
-	const isCarousel = useRef(null)
 	return (
 		<>
 			{questions ? (

@@ -84,7 +84,6 @@ export const AuthContextProvider = ({ children }) => {
 				.select()
 
 			if (data) {
-				console.log("User alias created")
 			}
 			if (error) {
 				console.error(error)

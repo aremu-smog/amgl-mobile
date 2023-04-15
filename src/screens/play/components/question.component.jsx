@@ -2,18 +2,21 @@ import { View, Text, StyleSheet, Dimensions, Pressable } from "react-native"
 import * as Clipboard from "expo-clipboard"
 import { useAuthContext } from "../../../context/auth.context"
 import { useState } from "react"
+import { LinearGradient } from "expo-linear-gradient"
 const QuestionComponent = ({ item, index }) => {
-	const { slug, description, url } = item
+	const { slug, description, url, primary_color, secondary_color } = item
 
 	return (
 		<View style={styles.wrapper}>
 			<View style={styles.container}>
-				<View style={styles.question}>
+				<LinearGradient
+					colors={[primary_color, secondary_color]}
+					style={styles.question}>
 					<View style={styles.emojiContainer}>
 						<Text style={styles.emoji}>{emojis[slug]}</Text>
 					</View>
 					<Text style={styles.questionText}>{slug}</Text>
-				</View>
+				</LinearGradient>
 				<View style={styles.description}>
 					<Text style={styles.descriptionText}>{description}</Text>
 				</View>
@@ -96,6 +99,7 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 		fontWeight: "bold",
 		textAlign: "center",
+		color: "#ffffff",
 	},
 	description: {
 		borderBottomStartRadius: BORDER_RADIUS_VALUE,

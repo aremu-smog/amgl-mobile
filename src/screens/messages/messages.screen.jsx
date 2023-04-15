@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react"
-import { View, Text, ScrollView, StyleSheet, Image } from "react-native"
+import {
+	View,
+	Text,
+	ScrollView,
+	StyleSheet,
+	Image,
+	FlatList,
+} from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
@@ -28,11 +35,13 @@ const MessagesScreen = () => {
 	}, [user])
 
 	return (
-		<ScrollView
-			contentContainerStyle={{ flexDirection: "row", flexWrap: "wrap" }}
-			style={styles.container}>
-			{messages.map(message => {
-				const { viewed } = message
+		<FlatList
+			style={styles.container}
+			data={messages}
+			numColumns={3}
+			keyExtractor={item => item.id}
+			renderItem={({ item }) => {
+				const { viewed } = item
 				const viewedColor = "rgba(0,0,0,0.1)"
 
 				return (
@@ -41,7 +50,7 @@ const MessagesScreen = () => {
 							viewed ? viewedColor : "#ec1187",
 							viewed ? viewedColor : "#ff8d10",
 						]}
-						key={message.id}
+						key={item.id}
 						style={{
 							...styles.item,
 						}}>
@@ -55,14 +64,14 @@ const MessagesScreen = () => {
 						/>
 					</LinearGradient>
 				)
-			})}
-		</ScrollView>
+			}}
+		/>
 	)
 }
 
 const styles = StyleSheet.create({
 	container: {
-		flexDirection: "row",
+		// flexDirection: "row",
 		paddingTop: 20,
 	},
 

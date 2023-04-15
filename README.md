@@ -13,4 +13,5 @@
 - [ ] Settings Screen, allow users to set profile pictures and logout screen?
 - [ ] Rotate gradients, right now the gradients flow from top to bottom
 - [ ] Share Button on the Play Screen below each option
+- [ ] Push Notification when someone sends a response
 - [ ] More will be added here...

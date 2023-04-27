@@ -2,8 +2,6 @@ import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import { MessageDetailsScreen, MessagesScreen, PlayScreen } from "../screens"
-import MessagesNavigator from "./messages.navigator"
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 const Tab = createMaterialTopTabNavigator()
 
 const AppStack = createNativeStackNavigator()
@@ -33,7 +31,7 @@ const TabScreens = () => {
 				headerShown: false,
 				tabBarIndicator: () => null,
 				tabBarLabelStyle: {
-					fontSize: 18,
+					fontSize: 16,
 					fontWeight: "bold",
 				},
 				swipeEnabled: false,
@@ -42,6 +40,7 @@ const TabScreens = () => {
 			}}>
 			<Tab.Screen name='Play' component={PlayScreen} />
 			<Tab.Screen name='Messages' component={MessagesScreen} />
+			<Tab.Screen name='Settings' component={MessagesScreen} />
 		</Tab.Navigator>
 	)
 }

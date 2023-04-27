@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
 		fontSize: 50,
 	},
 	question: {
-		borderTopStartRadius: BORDER_RADIUS_VALUE,
-		borderTopEndRadius: BORDER_RADIUS_VALUE,
+		borderTopLeftRadius: BORDER_RADIUS_VALUE,
+		borderTopRightRadius: BORDER_RADIUS_VALUE,
 		padding: 20,
 		backgroundColor: "#ec1187",
 	},
@@ -116,8 +116,8 @@ const styles = StyleSheet.create({
 		color: "#ffffff",
 	},
 	description: {
-		borderBottomStartRadius: BORDER_RADIUS_VALUE,
-		borderBottomEndRadius: BORDER_RADIUS_VALUE,
+		borderBottomLeftRadius: BORDER_RADIUS_VALUE,
+		borderBottomRightRadius: BORDER_RADIUS_VALUE,
 		paddingHorizontal: 30,
 		paddingVertical: 25,
 		backgroundColor: "white",

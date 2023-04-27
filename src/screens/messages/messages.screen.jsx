@@ -1,5 +1,11 @@
 import { useEffect, useCallback, useState } from "react"
-import { StyleSheet, Image, FlatList, TouchableOpacity } from "react-native"
+import {
+	StyleSheet,
+	Image,
+	Text,
+	FlatList,
+	TouchableOpacity,
+} from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
@@ -13,6 +19,7 @@ const MessagesScreen = ({ navigation }) => {
 	const [messages, setMessages] = useState([])
 
 	const fetchResponses = async () => {
+		console.log("Fetch responses")
 		const { data, error } = await supabaseApp
 			.from("responses")
 			.select("id, question_id, details, viewed")
@@ -58,7 +65,7 @@ const MessagesScreen = ({ navigation }) => {
 	useFocusEffect(
 		useCallback(() => {
 			fetchResponses()
-		}, [user])
+		}, [])
 	)
 
 	return (
@@ -100,8 +107,8 @@ const MessagesScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
 	container: {
-		// flexDirection: "row",
 		paddingTop: 20,
+		flex: 1,
 	},
 
 	item: {

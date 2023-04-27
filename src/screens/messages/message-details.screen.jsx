@@ -16,12 +16,12 @@ const MessageDetailsScreen = ({}) => {
 		<SafeAreaView style={{ flex: 1 }}>
 			<View style={styles.wrapper}>
 				<View style={styles.header}>
-					<Pressable onPress={goBack}>
+					<Pressable onPress={goBack} style={{ padding: 5, marginRight: -10 }}>
 						<Image
 							source={require("../../../assets/close.png")}
 							style={{
-								width: 25,
-								height: 25,
+								width: 20,
+								height: 20,
 								opacity: 0.3,
 							}}
 						/>

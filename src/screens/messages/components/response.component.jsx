@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
 	},
 
 	question: {
-		borderTopStartRadius: BORDER_RADIUS_VALUE,
-		borderTopEndRadius: BORDER_RADIUS_VALUE,
+		borderTopLeftRadius: BORDER_RADIUS_VALUE,
+		borderTopRightRadius: BORDER_RADIUS_VALUE,
 		paddingHorizontal: 20,
 		paddingVertical: 30,
 		backgroundColor: "#ec1187",

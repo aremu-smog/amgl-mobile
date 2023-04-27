@@ -9,7 +9,7 @@
 
 ## Roadmap (Things To be done)
 
-- [ ] Persist authentication (right now if you refresh the app, you are logged out)
+- [x] Persist authentication (right now if you refresh the app, you are logged out)
 - [ ] Settings Screen, allow users to set profile pictures and logout screen?
 - [ ] Rotate gradients, right now the gradients flow from top to bottom
 - [ ] Form Validation with Formik or React hook form

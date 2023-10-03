@@ -1,7 +1,12 @@
 import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import { MessageDetailsScreen, MessagesScreen, PlayScreen } from "../screens"
+import {
+	MessageDetailsScreen,
+	MessagesScreen,
+	PlayScreen,
+	SettingsScreen,
+} from "../screens"
 const Tab = createMaterialTopTabNavigator()
 
 const AppStack = createNativeStackNavigator()
@@ -40,7 +45,7 @@ const TabScreens = () => {
 			}}>
 			<Tab.Screen name='Play' component={PlayScreen} />
 			<Tab.Screen name='Messages' component={MessagesScreen} />
-			<Tab.Screen name='Settings' component={MessagesScreen} />
+			<Tab.Screen name='Settings' component={SettingsScreen} />
 		</Tab.Navigator>
 	)
 }

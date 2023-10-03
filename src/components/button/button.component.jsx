@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Pressable, Text, StyleSheet } from "react-native"
 
-const Button = ({ text, isLoading, ...props }) => {
+const Button = ({ text, isLoading, style, ...props }) => {
 	const [isPressed, setIsPressed] = useState(false)
 	return (
 		<Pressable
@@ -9,6 +9,7 @@ const Button = ({ text, isLoading, ...props }) => {
 				styles.container,
 				isPressed && styles.pressIn,
 				isLoading && styles.isDisabled,
+				style,
 			]}
 			onPress={() => {
 				alert("Button!")

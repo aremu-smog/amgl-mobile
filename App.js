@@ -82,7 +82,7 @@ export default function App() {
 	}, [])
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<SafeAreaView style={{ flex: 1, marginTop }}>
+			<SafeAreaView style={{ flex: 1 }}>
 				<AuthContextProvider>
 					<QuestionsContextProvider>
 						<Navigator />

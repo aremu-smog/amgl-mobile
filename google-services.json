@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "717805417038",
+    "project_id": "amgl-f0ab4",
+    "storage_bucket": "amgl-f0ab4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717805417038:android:da060db9161a533f3b491f",
+        "android_client_info": {
+          "package_name": "com.aremu_smog.amglpof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717805417038-7tcld7ui2kcvashls6bj4htd6n1masc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsi7cab_Q6cnEW3h1PLWzmNniF_ofCHoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717805417038-7tcld7ui2kcvashls6bj4htd6n1masc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

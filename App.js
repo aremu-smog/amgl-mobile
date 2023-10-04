@@ -12,8 +12,17 @@ import Constants from "expo-constants"
 
 const marginTop = Platform.OS === "android" ? currentHeight : 0
 
+Notifications.setNotificationHandler({
+	handleNotification: async () => ({
+		shouldShowAlert: true,
+		shouldPlaySound: false,
+		shouldSetBadge: false,
+	}),
+})
+
 async function sendPushNotification(expoPushToken) {
 	console.log("Send Push Notification...")
+	console.log({ expoPushToken })
 	const message = {
 		to: expoPushToken,
 		sound: "default",
@@ -36,7 +45,7 @@ async function sendPushNotification(expoPushToken) {
 		})
 		.then(data => console.log(data))
 		.catch(e => {
-			console.warn(e.message)
+			console.error(e.message)
 		})
 }
 
@@ -87,7 +96,10 @@ export default function App() {
 		expoPushToken,
 	})
 	useEffect(() => {
-		registerForPushNotificationsAsync().then(token => setExpoPushToken(token))
+		registerForPushNotificationsAsync().then(token => {
+			console.log({ token })
+			setExpoPushToken(token)
+		})
 
 		notificationListener.current =
 			Notifications.addNotificationReceivedListener(notification => {

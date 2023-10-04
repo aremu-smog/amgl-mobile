@@ -7,7 +7,6 @@ import QuestionsContextProvider from "./src/context/questions.context"
 const currentHeight = StatusBar.currentHeight
 import * as Device from "expo-device"
 import * as Notifications from "expo-notifications"
-import { Button } from "./src/components"
 import Constants from "expo-constants"
 
 const marginTop = Platform.OS === "android" ? currentHeight : 0
@@ -15,39 +14,10 @@ const marginTop = Platform.OS === "android" ? currentHeight : 0
 Notifications.setNotificationHandler({
 	handleNotification: async () => ({
 		shouldShowAlert: true,
-		shouldPlaySound: false,
+		shouldPlaySound: true,
 		shouldSetBadge: false,
 	}),
 })
-
-async function sendPushNotification(expoPushToken) {
-	console.log("Send Push Notification...")
-	console.log({ expoPushToken })
-	const message = {
-		to: expoPushToken,
-		sound: "default",
-		title: "Testing PN",
-		body: "We are still testing",
-		data: { someData: "goes here" },
-	}
-
-	await fetch("https://exp.host/--/api/v2/push/send", {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Accept-encoding": "gzip, deflate",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(message),
-	})
-		.then(res => {
-			return res.json()
-		})
-		.then(data => console.log(data))
-		.catch(e => {
-			console.error(e.message)
-		})
-}
 
 async function registerForPushNotificationsAsync() {
 	let token
@@ -68,7 +38,6 @@ async function registerForPushNotificationsAsync() {
 				projectId: Constants.easConfig?.projectId,
 			})
 		).data
-		console.log({ finalStatus })
 	} else {
 		alert("Must use physical device for Push Notifications")
 	}
@@ -76,9 +45,9 @@ async function registerForPushNotificationsAsync() {
 	if (Platform.OS === "android") {
 		Notifications.setNotificationChannelAsync("default", {
 			name: "default",
-			// importance: Notifications.AndroidImportance.MAX,
-			// vibrationPattern: [0, 250, 250, 250],
-			// lightColor: "#FF231F7C",
+			importance: Notifications.AndroidImportance.MAX,
+			vibrationPattern: [0, 250, 250, 250],
+			lightColor: "#FF231F7C",
 		})
 	}
 
@@ -91,12 +60,8 @@ export default function App() {
 	const notificationListener = useRef()
 	const responseListener = useRef()
 
-	console.log({
-		expoPushToken,
-	})
 	useEffect(() => {
 		registerForPushNotificationsAsync().then(token => {
-			console.log({ token })
 			setExpoPushToken(token)
 		})
 
@@ -120,13 +85,7 @@ export default function App() {
 			<SafeAreaView style={{ flex: 1, marginTop }}>
 				<AuthContextProvider>
 					<QuestionsContextProvider>
-						<Button
-							text='Send Push Notification'
-							onPress={async () => {
-								await sendPushNotification(expoPushToken)
-							}}
-						/>
-						{/* <Navigator /> */}
+						<Navigator />
 					</QuestionsContextProvider>
 				</AuthContextProvider>
 			</SafeAreaView>

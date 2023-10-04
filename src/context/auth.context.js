@@ -11,12 +11,23 @@ export const AuthContextProvider = ({ children }) => {
 
 	const [currentSession, setCurrentSession] = useState(null)
 
-	const getUserDataFromSession = async (session, loggedInUser) => {
-		if (!currentSession) {
+	useEffect(() => {
+		supabaseApp.auth.onAuthStateChange(async (e, session) => {
 			setCurrentSession(session)
-			const { user } = session ?? {}
-			const { email, id } = loggedInUser ?? user ?? {}
+		})
+	}, [])
 
+	useEffect(() => {
+		const { user } = currentSession ?? {}
+		const { email, id } = user ?? {}
+
+		setUser({
+			email,
+			id,
+			username: "smogdaddy",
+		})
+
+		const fetchUserDetails = async () => {
 			const { data, error } = await supabaseApp
 				.from("user_alias")
 				.select("name")
@@ -24,31 +35,20 @@ export const AuthContextProvider = ({ children }) => {
 
 			if (data) {
 				const userAlias = data[0]
-				const username = userAlias.name
+				const username = userAlias?.name
 
-				setUser({
-					email,
-					username,
-					id,
+				setUser(prevUser => {
+					return { ...prevUser, username }
 				})
 			}
 
 			if (error) {
-				console.warn(error)
+				console.warn(error.message)
 			}
 		}
-	}
-	useEffect(() => {
-		supabaseApp.auth.getSession().then(({ data: { session } }) => {
-			getUserDataFromSession(session)
-		})
 
-		supabaseApp.auth.onAuthStateChange((e, session) => {
-			if (session) {
-				getUserDataFromSession(session)
-			}
-		})
-	}, [])
+		fetchUserDetails()
+	}, [currentSession])
 
 	const login = async (email, password) => {
 		const { data, error } = await supabaseApp.auth.signInWithPassword({

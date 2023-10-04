@@ -26,8 +26,8 @@ async function sendPushNotification(expoPushToken) {
 	const message = {
 		to: expoPushToken,
 		sound: "default",
-		title: "Original Title",
-		body: "And here is the body!",
+		title: "Testing PN",
+		body: "We are still testing",
 		data: { someData: "goes here" },
 	}
 
@@ -63,7 +63,6 @@ async function registerForPushNotificationsAsync() {
 			return
 		}
 
-		console.log("Project id", Constants.expoConfig?.extra?.eas?.projectId)
 		token = (
 			await Notifications.getExpoPushTokenAsync({
 				projectId: Constants.easConfig?.projectId,
@@ -77,9 +76,9 @@ async function registerForPushNotificationsAsync() {
 	if (Platform.OS === "android") {
 		Notifications.setNotificationChannelAsync("default", {
 			name: "default",
-			importance: Notifications.AndroidImportance.MAX,
-			vibrationPattern: [0, 250, 250, 250],
-			lightColor: "#FF231F7C",
+			// importance: Notifications.AndroidImportance.MAX,
+			// vibrationPattern: [0, 250, 250, 250],
+			// lightColor: "#FF231F7C",
 		})
 	}
 

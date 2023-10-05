@@ -1,4 +1,12 @@
-import { View, Text, StyleSheet, Dimensions, Pressable } from "react-native"
+import {
+	View,
+	Text,
+	StyleSheet,
+	Dimensions,
+	Pressable,
+	ToastAndroid,
+	Platform,
+} from "react-native"
 import * as Clipboard from "expo-clipboard"
 import { useAuthContext } from "../../../context/auth.context"
 import { useState } from "react"
@@ -66,8 +74,24 @@ const InfoSection = ({ url, color }) => {
 	)
 }
 
+/**
+ *
+ * @param {string} message
+ * @param {number} duration
+ */
+const showToast = (message, duration) => {
+	If(Platform.OS === "android")
+	{
+		ToastAndroid.show(message, duration)
+	}
+}
 const copyToClipboard = async text => {
-	await Clipboard.setStringAsync(text)
+	try {
+		await Clipboard.setStringAsync(text)
+		showToast("Link copied!", 2000)
+	} catch (e) {
+		showToast("Unable to copy link", 2000)
+	}
 }
 
 const emojis = {

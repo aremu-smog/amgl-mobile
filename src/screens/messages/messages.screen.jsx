@@ -46,8 +46,6 @@ const MessagesScreen = ({ navigation }) => {
 	const gotoDetailsPage = async item => {
 		const { id, question_id, details, viewed } = item
 
-		console.log({ item })
-
 		const responseQuestion = await questions.find(
 			_question => _question.id === question_id
 		)

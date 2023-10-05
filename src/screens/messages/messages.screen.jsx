@@ -5,6 +5,8 @@ import {
 	Text,
 	FlatList,
 	TouchableOpacity,
+	View,
+	ActivityIndicator,
 } from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
@@ -17,9 +19,12 @@ const MessagesScreen = ({ navigation }) => {
 	const { user } = useAuthContext()
 	const { questions } = useQuestionsContext()
 	const [messages, setMessages] = useState([])
+	const [isFetching, setIsFetching] = useState(false)
+
+	const isLoading = isFetching && !messages.length
 
 	const fetchResponses = async () => {
-		console.log("Fetch responses")
+		setIsFetching(true)
 		const { data, error } = await supabaseApp
 			.from("responses")
 			.select("id, question_id, details, viewed")
@@ -34,6 +39,8 @@ const MessagesScreen = ({ navigation }) => {
 		if (error) {
 			console.warn(error)
 		}
+
+		setIsFetching(false)
 	}
 
 	const gotoDetailsPage = async item => {
@@ -68,6 +75,13 @@ const MessagesScreen = ({ navigation }) => {
 		}, [])
 	)
 
+	if (isLoading) {
+		return (
+			<View style={styles.loaderContainer}>
+				<ActivityIndicator size='large' color='#ec1187' />
+			</View>
+		)
+	}
 	return (
 		<FlatList
 			style={styles.container}
@@ -106,6 +120,11 @@ const MessagesScreen = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
+	loaderContainer: {
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+	},
 	container: {
 		paddingTop: 20,
 		flex: 1,

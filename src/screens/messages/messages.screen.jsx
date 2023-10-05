@@ -46,6 +46,8 @@ const MessagesScreen = ({ navigation }) => {
 	const gotoDetailsPage = async item => {
 		const { id, question_id, details, viewed } = item
 
+		console.log({ item })
+
 		const responseQuestion = await questions.find(
 			_question => _question.id === question_id
 		)
@@ -67,6 +69,9 @@ const MessagesScreen = ({ navigation }) => {
 			question: responseQuestion.description,
 			response: details,
 		})
+		/* We are refetching the responses so that when the user comes back to this screen, 
+		the item is already greyed out */
+		fetchResponses()
 	}
 
 	useFocusEffect(

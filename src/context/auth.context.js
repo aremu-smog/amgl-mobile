@@ -1,19 +1,19 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
-import { firebaseInitialization } from "../api/firebase"
 import { supabaseApp } from "../api/supabase"
 
 const AuthContext = createContext()
 
 export const AuthContextProvider = ({ children }) => {
 	const [user, setUser] = useState(null)
-	const [isReadyToLogin, setIsReadyToLogin] = useState(false)
+	const [isAppReady, setIsAppReady] = useState(false)
 
 	const [currentSession, setCurrentSession] = useState(null)
 
 	useEffect(() => {
 		supabaseApp.auth.onAuthStateChange(async (e, session) => {
 			setCurrentSession(session)
+			setIsAppReady(true)
 		})
 	}, [])
 
@@ -57,7 +57,6 @@ export const AuthContextProvider = ({ children }) => {
 		})
 
 		if (data) {
-			setIsReadyToLogin(true)
 		}
 		if (error) {
 			console.error(error)
@@ -99,6 +98,7 @@ export const AuthContextProvider = ({ children }) => {
 				login,
 				register,
 				user,
+				isAppReady,
 			}}>
 			{children}
 		</AuthContext.Provider>

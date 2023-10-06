@@ -115,11 +115,13 @@ const SettingsScreen = () => {
 const LogoutButton = () => {
 	const [isLoading, setIsLoading] = useState(false)
 
-	const logout = () => {
+	const logout = async () => {
 		setIsLoading(true)
-		setTimeout(() => {
-			setIsLoading(false)
-		}, 5000)
+		const { error } = await supabaseApp.auth.signOut()
+		if (error) {
+			console.error(e.message)
+		}
+		setIsLoading(false)
 	}
 	return (
 		<Button

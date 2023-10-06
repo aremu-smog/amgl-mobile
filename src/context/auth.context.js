@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
 import { supabaseApp } from "../api/supabase"
+import { Alert } from "react-native"
 
 const AuthContext = createContext()
 
@@ -59,6 +60,7 @@ export const AuthContextProvider = ({ children }) => {
 		if (data) {
 		}
 		if (error) {
+			Alert.alert("Incorrect email/password, please try again")
 			console.error(error)
 		}
 	}

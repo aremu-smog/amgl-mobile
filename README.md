@@ -11,10 +11,12 @@
 
 - [x] Persist authentication (right now if you refresh the app, you are logged out)
 - [x] Push Notification when someone sends a response
-- [ ] Implement logout
+- [x] Implement logout
+- [x] Form Validation on Login with Formik
+- [ ] Error on login screen (using `Alert` atm, probably something more sophisticated in the furue)
+- [ ] Form Validation on Signup with Formik
+- [ ] Error on register display (probably a toast?)
 - [ ] Settings Screen, allow users to set profile pictures and logout screen?
 - [ ] Rotate gradients, right now the gradients flow from top to bottom
-- [ ] Form Validation with Formik or React hook form
-- [ ] Error from login or register display (probably a toast?)
 - [ ] Share Button on the Play Screen below each option
 - [ ] More will be added here...

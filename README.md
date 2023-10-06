@@ -13,7 +13,7 @@
 - [x] Push Notification when someone sends a response
 - [x] Implement logout
 - [x] Form Validation on Login with Formik
-- [ ] Error on login screen (using `Alert` atm, probably something more sophisticated in the furue)
+- [xs] Error on login screen (using `Alert` atm, probably something more sophisticated in the furue)
 - [ ] Form Validation on Signup with Formik
 - [ ] Error on register display (probably a toast?)
 - [ ] Settings Screen, allow users to set profile pictures and logout screen?

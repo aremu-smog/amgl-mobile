@@ -8,7 +8,6 @@ import {
 	Platform,
 } from "react-native"
 import * as Clipboard from "expo-clipboard"
-import { useAuthContext } from "../../../context/auth.context"
 import { useState } from "react"
 import { LinearGradient } from "expo-linear-gradient"
 const QuestionComponent = ({ item, index }) => {
@@ -85,6 +84,11 @@ const showToast = (message, duration) => {
 		ToastAndroid.show(message, duration)
 	}
 }
+
+/**
+ *
+ * @param {string} text
+ */
 const copyToClipboard = async text => {
 	try {
 		await Clipboard.setStringAsync(text)

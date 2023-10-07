@@ -20,6 +20,7 @@ export const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		const { user } = currentSession ?? {}
+
 		const { email, id } = user ?? {}
 
 		setUser({
@@ -44,11 +45,13 @@ export const AuthContextProvider = ({ children }) => {
 			}
 
 			if (error) {
-				console.warn(error.message)
+				console.error(error.message)
 			}
 		}
 
-		fetchUserDetails()
+		if (currentSession) {
+			fetchUserDetails()
+		}
 	}, [currentSession])
 
 	const login = async (email, password) => {
@@ -65,32 +68,46 @@ export const AuthContextProvider = ({ children }) => {
 		}
 	}
 
+	/**
+	 *
+	 * @param {string} email
+	 * @param {string} password
+	 * @param {string} username
+	 */
 	const register = async (email, password, username) => {
-		const { data: signUpData, error: signUpError } =
-			await supabaseApp.auth.signUp({
-				email,
-				password,
-			})
+		const { data: userAliasData, error: userAliasError } = await supabaseApp
+			.from("user_alias")
+			.select("name")
 
-		if (signUpData) {
-			const { user } = signUpData
-			const { data, error } = await supabaseApp
-				.from("user_alias")
-				.insert({
-					user_id: user.id,
-					name: username,
+		if (userAliasData.length > 0) {
+			Alert.alert("Username taken, please try something else")
+		} else {
+			const { data: signUpData, error: signUpError } =
+				await supabaseApp.auth.signUp({
+					email,
+					password,
 				})
-				.select()
 
-			if (data) {
-			}
-			if (error) {
-				console.error(error)
-			}
-		}
+			if (signUpData) {
+				const { user } = signUpData
+				const { data, error } = await supabaseApp
+					.from("user_alias")
+					.insert({
+						user_id: user.id,
+						name: username,
+					})
+					.select()
 
-		if (signUpError) {
-			console.error(signUpError)
+				if (data) {
+				}
+				if (error) {
+					console.error(error)
+				}
+			}
+
+			if (signUpError) {
+				console.error(signUpError)
+			}
 		}
 	}
 	return (

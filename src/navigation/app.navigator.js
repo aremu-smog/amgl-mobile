@@ -7,6 +7,7 @@ import {
 	PlayScreen,
 	SettingsScreen,
 } from "../screens"
+import { SCREEN_NAMES } from "../screens/names"
 const Tab = createMaterialTopTabNavigator()
 
 const AppStack = createNativeStackNavigator()
@@ -43,9 +44,9 @@ const TabScreens = () => {
 				tabBarAndroidRipple: false,
 				tabBarGap: 5,
 			}}>
-			<Tab.Screen name='Play' component={PlayScreen} />
-			<Tab.Screen name='Messages' component={MessagesScreen} />
-			<Tab.Screen name='Settings' component={SettingsScreen} />
+			<Tab.Screen name={SCREEN_NAMES.PLAY} component={PlayScreen} />
+			<Tab.Screen name={SCREEN_NAMES.MESSAGES} component={MessagesScreen} />
+			<Tab.Screen name={SCREEN_NAMES.SETTINGS} component={SettingsScreen} />
 		</Tab.Navigator>
 	)
 }

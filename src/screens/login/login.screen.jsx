@@ -5,6 +5,7 @@ import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { Formik } from "formik"
 import * as Yup from "yup"
+import { SCREEN_NAMES } from "../names"
 
 const loginSchema = Yup.object().shape({
 	email: Yup.string()
@@ -18,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
 	const { login } = useAuthContext()
 
 	const navigateToRegisterScreen = () => {
-		navigation.navigate("Register")
+		navigation.navigate(SCREEN_NAMES.REGISTER)
 	}
 	return (
 		<View style={{ flex: 1 }}>

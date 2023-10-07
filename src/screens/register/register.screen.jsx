@@ -6,6 +6,7 @@ import { LinearGradient } from "expo-linear-gradient"
 import { useNavigation } from "@react-navigation/native"
 import { Formik } from "formik"
 import * as Yup from "yup"
+import { SCREEN_NAMES } from "../names"
 
 const registrationSchema = Yup.object().shape({
 	email: Yup.string()
@@ -24,7 +25,7 @@ const RegisterScreen = () => {
 	const navigation = useNavigation()
 
 	const gotoLoginScreen = () => {
-		navigation.navigate("Login")
+		navigation.navigate(SCREEN_NAMES.LOGIN)
 	}
 
 	const { register } = useAuthContext()

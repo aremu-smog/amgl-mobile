@@ -1,6 +1,7 @@
 import { View, Text, Image } from "react-native"
 import { Button } from "../../../components"
 import { useNavigation } from "@react-navigation/native"
+import { SCREEN_NAMES } from "../../names"
 
 const loveIconSrc = require("../../../../assets/love-letter.png")
 const NoMessages = () => {
@@ -35,7 +36,7 @@ const NoMessages = () => {
 			<Text style={{ marginBottom: 20 }}>No messages found</Text>
 			<Button
 				text='Share links'
-				onPress={() => navigation.navigate("Play")}
+				onPress={() => navigation.navigate(SCREEN_NAMES.PLAY)}
 				style={{ width: "100%", marginBottom: 30 }}
 			/>
 		</View>

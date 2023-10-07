@@ -26,7 +26,7 @@ export const AuthContextProvider = ({ children }) => {
 		setUser({
 			email,
 			id,
-			username: "smogdaddy",
+			username: "",
 		})
 
 		const fetchUserDetails = async () => {
@@ -100,6 +100,9 @@ export const AuthContextProvider = ({ children }) => {
 					.select()
 
 				if (data) {
+					setUser(prevUser => {
+						return { ...prevUser, username }
+					})
 				}
 				if (error) {
 					console.error(error)

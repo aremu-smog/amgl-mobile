@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Pressable, Text, StyleSheet } from "react-native"
+import { Pressable, Text, StyleSheet, ActivityIndicator } from "react-native"
 
 const Button = ({ text, isLoading, style, ...props }) => {
 	const [isPressed, setIsPressed] = useState(false)
@@ -17,7 +17,11 @@ const Button = ({ text, isLoading, style, ...props }) => {
 			onPressIn={() => setIsPressed(true)}
 			onPressOut={() => setIsPressed(false)}
 			{...props}>
-			<Text style={styles.text}>{isLoading ? "Loading..." : text}</Text>
+			{isLoading ? (
+				<ActivityIndicator size='small' color='#fff' />
+			) : (
+				<Text style={styles.text}>{text}</Text>
+			)}
 		</Pressable>
 	)
 }

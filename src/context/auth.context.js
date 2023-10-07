@@ -78,6 +78,7 @@ export const AuthContextProvider = ({ children }) => {
 		const { data: userAliasData, error: userAliasError } = await supabaseApp
 			.from("user_alias")
 			.select("name")
+			.eq("name", username)
 
 		if (userAliasData.length > 0) {
 			Alert.alert("Username taken, please try something else")

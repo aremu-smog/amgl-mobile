@@ -40,7 +40,7 @@ const RegisterScreen = () => {
 			onSubmit={async values => {
 				const { email, password, username } = values
 				try {
-					await register(email, password, username)
+					await register(email.trim(), password.trim(), username.trim())
 				} catch (e) {
 					console.warn(e.message)
 				}

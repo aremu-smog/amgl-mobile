@@ -79,8 +79,7 @@ const InfoSection = ({ url, color }) => {
  * @param {number} duration
  */
 const showToast = (message, duration) => {
-	If(Platform.OS === "android")
-	{
+	if (Platform.OS === "android") {
 		ToastAndroid.show(message, duration)
 	}
 }

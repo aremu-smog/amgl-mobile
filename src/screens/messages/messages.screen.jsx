@@ -1,18 +1,11 @@
 import { useEffect, useCallback, useState } from "react"
-import {
-	StyleSheet,
-	Image,
-	Text,
-	FlatList,
-	TouchableOpacity,
-	View,
-	ActivityIndicator,
-} from "react-native"
+import { StyleSheet, Image, FlatList, TouchableOpacity } from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useQuestionsContext } from "../../context/questions.context"
 import { useFocusEffect } from "@react-navigation/native"
+import { MessagesLoading, NoMessages } from "./components"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
 const MessagesScreen = ({ navigation }) => {
@@ -21,7 +14,8 @@ const MessagesScreen = ({ navigation }) => {
 	const [messages, setMessages] = useState([])
 	const [isFetching, setIsFetching] = useState(false)
 
-	const isLoading = isFetching && !messages.length
+	const doesNotHaveMessages = !messages.length
+	const isLoading = isFetching && doesNotHaveMessages
 
 	const fetchResponses = async () => {
 		setIsFetching(true)
@@ -39,7 +33,6 @@ const MessagesScreen = ({ navigation }) => {
 		if (error) {
 			console.warn(error)
 		}
-
 		setIsFetching(false)
 	}
 
@@ -79,11 +72,11 @@ const MessagesScreen = ({ navigation }) => {
 	)
 
 	if (isLoading) {
-		return (
-			<View style={styles.loaderContainer}>
-				<ActivityIndicator size='large' color='#ec1187' />
-			</View>
-		)
+		return <MessagesLoading />
+	}
+
+	if (doesNotHaveMessages) {
+		return <NoMessages />
 	}
 	return (
 		<FlatList

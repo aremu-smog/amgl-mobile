@@ -1,11 +1,14 @@
 import React, { useState } from "react"
-import { Switch, View, Text, Alert } from "react-native"
+import { View, Text, Alert, Image } from "react-native"
 import { Button } from "../../components"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
+import { LinearGradient } from "expo-linear-gradient"
 import Constants from "expo-constants"
 import * as Device from "expo-device"
 import * as Notifications from "expo-notifications"
+
+const profileImage = require("../../../assets/profile.png")
 
 async function registerForPushNotificationsAsync() {
 	let token
@@ -43,12 +46,7 @@ async function registerForPushNotificationsAsync() {
 }
 
 const SettingsScreen = () => {
-	const [isEnabled, setIsEnabled] = useState(false)
 	const { user } = useAuthContext()
-
-	const toggleSwitch = () => {
-		setIsEnabled(prev => !prev)
-	}
 
 	const enablePushNotification = () => {
 		registerForPushNotificationsAsync().then(async token => {
@@ -83,31 +81,45 @@ const SettingsScreen = () => {
 			<View>
 				<View
 					style={{
-						width: 125,
-						height: 125,
-						backgroundColor: "black",
-						borderRadius: 250,
 						alignSelf: "center",
-						marginBottom: 24,
 						justifyContent: "center",
 						alignItems: "center",
 					}}>
-					<Text style={{ fontSize: 72 }}>😉</Text>
+					<Image
+						source={profileImage}
+						style={{ width: 120, height: 80 }}
+						resizeMode='contain'
+					/>
+					<Text
+						style={{
+							fontSize: 14,
+							fontWeight: "600",
+							textTransform: "uppercase",
+							textAlign: "center",
+							// marginVertical: 20,
+						}}>
+						{user?.username}
+					</Text>
 				</View>
-				<View>
+
+				{/* <View>
 					<Button
 						text='Enable Push Notifications'
 						onPress={enablePushNotification}
 					/>
-					{/* <Switch
-						trackColor={{ false: "#D6D6D6", true: "#086C72" }}
-						ios_backgroundColor='#3e3e3e'
-						onValueChange={toggleSwitch}
-						value={isEnabled}
-					/> */}
-				</View>
+				</View> */}
 			</View>
-			<LogoutButton />
+			<View style={{ flex: 1, marginVertical: 24 }}>
+				<LinearGradient
+					colors={["#ec1187", "#ff8d10"]}
+					style={{ flex: 1, borderRadius: 20 }}></LinearGradient>
+			</View>
+			<View>
+				<LogoutButton />
+				<Text style={{ opacity: 0.5, textAlign: "center" }}>
+					v{Constants.manifest.version}
+				</Text>
+			</View>
 		</View>
 	)
 }

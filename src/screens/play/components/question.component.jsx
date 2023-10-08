@@ -6,6 +6,7 @@ import {
 	Pressable,
 	ToastAndroid,
 	Platform,
+	Image,
 } from "react-native"
 import * as Clipboard from "expo-clipboard"
 import { useState } from "react"
@@ -20,7 +21,11 @@ const QuestionComponent = ({ item, index }) => {
 					colors={[primary_color, secondary_color]}
 					style={styles.question}>
 					<View style={styles.emojiContainer}>
-						<Text style={styles.emoji}>{emojis[slug]}</Text>
+						<Image
+							source={emojis[slug]}
+							style={styles.emoji}
+							resizeMode='contain'
+						/>
 					</View>
 					<Text style={styles.questionText}>{slug}</Text>
 				</LinearGradient>
@@ -98,10 +103,10 @@ const copyToClipboard = async text => {
 }
 
 const emojis = {
-	anonymous: "🎭",
-	confessions: "🔊",
-	friendship: "👯‍♀️",
-	rizzme: "💦",
+	anonymous: require("../../../../assets/emojis/anonymous.png"),
+	confessions: require("../../../../assets/emojis/confession.png"),
+	friendship: require("../../../../assets/emojis/friendship.png"),
+	rizzme: require("../../../../assets/emojis/rizz.png"),
 }
 
 const BORDER_RADIUS_VALUE = 24
@@ -128,7 +133,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	emoji: {
-		fontSize: 50,
+		width: 45,
+		height: 45,
 	},
 	question: {
 		borderTopLeftRadius: BORDER_RADIUS_VALUE,

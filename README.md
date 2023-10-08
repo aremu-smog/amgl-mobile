@@ -13,10 +13,10 @@
 - [x] Push Notification when someone sends a response
 - [x] Implement logout
 - [x] Form Validation on Login with Formik
-- [xs] Error on login screen (using `Alert` atm, probably something more sophisticated in the furue)
-- [ ] Form Validation on Signup with Formik
-- [ ] Error on register display (probably a toast?)
-- [ ] Settings Screen, allow users to set profile pictures and logout screen?
+- [x] Error on login screen (using `Alert` atm, probably something more sophisticated in the furue)
+- [x] Form Validation on Signup with Formik
+- [x] Error on register display (probably a toast?)
+- [x] Settings Screen, allow users to set profile pictures and logout screen?
 - [ ] Rotate gradients, right now the gradients flow from top to bottom
 - [ ] Share Button on the Play Screen below each option
 - [ ] More will be added here...

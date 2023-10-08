@@ -17,6 +17,7 @@
 - [x] Form Validation on Signup with Formik
 - [x] Error on register display (probably a toast?)
 - [x] Settings Screen, allow users to set profile pictures and logout screen?
+- [ ] Refactor Push Notification Approach
 - [ ] Rotate gradients, right now the gradients flow from top to bottom
 - [ ] Share Button on the Play Screen below each option
 - [ ] More will be added here...

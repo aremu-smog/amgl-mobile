@@ -1,13 +1,59 @@
 import { useEffect, useCallback, useState } from "react"
-import { StyleSheet, Image, FlatList, TouchableOpacity } from "react-native"
+import {
+	StyleSheet,
+	Image,
+	FlatList,
+	TouchableOpacity,
+	Alert,
+} from "react-native"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useQuestionsContext } from "../../context/questions.context"
 import { useFocusEffect } from "@react-navigation/native"
 import { MessagesLoading, NoMessages } from "./components"
+import * as Device from "expo-device"
+import * as Notifications from "expo-notifications"
+import Constants from "expo-constants"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
+
+async function registerForPushNotificationsAsync() {
+	let token
+
+	if (Device.isDevice) {
+		const { status: existingStatus } = await Notifications.getPermissionsAsync()
+		let finalStatus = existingStatus
+		if (existingStatus !== "granted") {
+			const { status } = await Notifications.requestPermissionsAsync()
+			finalStatus = status
+		}
+		if (finalStatus !== "granted") {
+			alert("Failed to get push token for push notification!")
+			return
+		}
+
+		token = (
+			await Notifications.getExpoPushTokenAsync({
+				projectId: Constants.easConfig?.projectId,
+			})
+		).data
+	} else {
+		alert("Must use physical device for Push Notifications")
+	}
+
+	if (Platform.OS === "android") {
+		Notifications.setNotificationChannelAsync("default", {
+			name: "default",
+			importance: Notifications.AndroidImportance.MAX,
+			vibrationPattern: [0, 250, 250, 250],
+			lightColor: "#FF231F7C",
+		})
+	}
+
+	return token
+}
+
 const MessagesScreen = ({ navigation }) => {
 	const { user } = useAuthContext()
 	const { questions } = useQuestionsContext()
@@ -16,6 +62,31 @@ const MessagesScreen = ({ navigation }) => {
 
 	const doesNotHaveMessages = !messages.length
 	const isLoading = isFetching && doesNotHaveMessages
+
+	const enablePushNotification = () => {
+		registerForPushNotificationsAsync().then(async token => {
+			console.log({ token })
+			try {
+				const { data, error } = await supabaseApp
+					.from("push_notifications")
+					.insert({
+						user_id: user?.id,
+						expo_token: token,
+					})
+					.select()
+
+				if (data) {
+					Alert.alert("Push Notification Enabled")
+				}
+
+				if (error) {
+					console.error(error.message)
+				}
+			} catch (e) {
+				console.error(e.message)
+			}
+		})
+	}
 
 	const fetchResponses = async () => {
 		setIsFetching(true)
@@ -68,6 +139,25 @@ const MessagesScreen = ({ navigation }) => {
 	useFocusEffect(
 		useCallback(() => {
 			fetchResponses()
+		}, [])
+	)
+	useFocusEffect(
+		useCallback(() => {
+			fetchResponses()
+
+			/**
+			 * Update Logic for PN enabling and disabling
+			 */
+			Alert.alert(
+				"Never miss a message",
+				"Get notified when you receive new messages",
+				[
+					{
+						text: "Enable Push Notification",
+						onPress: enablePushNotification,
+					},
+				]
+			)
 		}, [])
 	)
 

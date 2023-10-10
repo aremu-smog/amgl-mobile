@@ -55,27 +55,40 @@ async function registerForPushNotificationsAsync() {
 }
 
 const MessagesScreen = ({ navigation }) => {
-	const { user } = useAuthContext()
+	const { user, setUser } = useAuthContext()
 	const { questions } = useQuestionsContext()
-	const [messages, setMessages] = useState([])
-	const [isFetching, setIsFetching] = useState(false)
+
+	const user_id = user?.id
+	const { isFetching, messages, fetchResponses } = useResponeses({ user_id })
 
 	const doesNotHaveMessages = !messages.length
 	const isLoading = isFetching && doesNotHaveMessages
 
 	const enablePushNotification = () => {
 		registerForPushNotificationsAsync().then(async token => {
-			console.log({ token })
 			try {
 				const { data, error } = await supabaseApp
 					.from("push_notifications")
 					.insert({
-						user_id: user?.id,
+						user_id,
 						expo_token: token,
 					})
 					.select()
 
 				if (data) {
+					const { data, error } = await supabaseApp
+						.from("user_alias")
+						.update({
+							push_notification_enabled: true,
+						})
+						.eq("user_id", user_id)
+						.select()
+					if (data) {
+						setUser(prevUser => {
+							return { ...prevUser, push_notification_enabled: true }
+						})
+					}
+
 					Alert.alert("Push Notification Enabled")
 				}
 
@@ -86,25 +99,6 @@ const MessagesScreen = ({ navigation }) => {
 				console.error(e.message)
 			}
 		})
-	}
-
-	const fetchResponses = async () => {
-		setIsFetching(true)
-		const { data, error } = await supabaseApp
-			.from("responses")
-			.select("id, question_id, details, viewed")
-			.eq("user_id", user.id)
-			.order("viewed", {
-				ascending: true,
-			})
-
-		if (data) {
-			setMessages(data)
-		}
-		if (error) {
-			console.warn(error)
-		}
-		setIsFetching(false)
 	}
 
 	const gotoDetailsPage = async item => {
@@ -143,22 +137,23 @@ const MessagesScreen = ({ navigation }) => {
 	)
 	useFocusEffect(
 		useCallback(() => {
-			fetchResponses()
+			if (!user.push_notification_enabled) {
+				/**
+				 * Update Logic for PN enabling and disabling
+				 */
+				Alert.alert(
+					"Never miss a message",
+					"Get notified when new messages are sent to you",
 
-			/**
-			 * Update Logic for PN enabling and disabling
-			 */
-			Alert.alert(
-				"Never miss a message",
-				"Get notified when you receive new messages",
-				[
-					{
-						text: "Enable Push Notification",
-						onPress: enablePushNotification,
-					},
-				]
-			)
-		}, [])
+					[
+						{
+							text: "Enable Push Notification",
+							onPress: enablePushNotification,
+						},
+					]
+				)
+			}
+		}, [user])
 	)
 
 	if (isLoading) {
@@ -203,6 +198,44 @@ const MessagesScreen = ({ navigation }) => {
 			}}
 		/>
 	)
+}
+
+/**
+ * Fetch all responses set to a user
+ *
+ * @param {Object} Prop - Responses input prop
+ * @param {string} Prop.user_id - Id of the user
+ */
+const useResponeses = ({ user_id }) => {
+	const [messages, setMessages] = useState([])
+	const [isFetching, setIsFetching] = useState(false)
+
+	const fetchResponses = async () => {
+		setIsFetching(true)
+
+		const { data, error } = await supabaseApp
+			.from("responses")
+			.select("id, question_id, details, viewed")
+			.eq("user_id", user_id)
+			.order("viewed", {
+				ascending: true,
+			})
+
+		if (data) {
+			setMessages(data)
+		}
+		if (error) {
+			console.warn(error)
+		}
+
+		setIsFetching(false)
+	}
+
+	return {
+		messages,
+		isFetching,
+		fetchResponses,
+	}
 }
 
 const styles = StyleSheet.create({

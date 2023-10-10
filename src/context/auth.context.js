@@ -26,21 +26,21 @@ export const AuthContextProvider = ({ children }) => {
 		setUser({
 			email,
 			id,
-			username: "",
 		})
 
 		const fetchUserDetails = async () => {
 			const { data, error } = await supabaseApp
 				.from("user_alias")
-				.select("name")
+				.select()
 				.eq("user_id", id)
 
 			if (data) {
 				const userAlias = data[0]
 				const username = userAlias?.name
+				const push_notification_enabled = userAlias?.push_notification_enabled
 
 				setUser(prevUser => {
-					return { ...prevUser, username }
+					return { ...prevUser, username, push_notification_enabled }
 				})
 			}
 
@@ -121,6 +121,7 @@ export const AuthContextProvider = ({ children }) => {
 				login,
 				register,
 				user,
+				setUser,
 				isAppReady,
 			}}>
 			{children}

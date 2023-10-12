@@ -6,6 +6,13 @@ import { useState } from "react"
  *
  * @param {Object} Prop - Responses input prop
  * @param {string} Prop.user_id - Id of the user
+ *
+ * @typedef {Object} Response
+ * @property {Array} messages
+ * @property {boolean} isFetching
+ * @property {Function} fetchResponses
+ *
+ * @returns {Response}
  */
 export const useResponses = ({ user_id }) => {
 	const [messages, setMessages] = useState([])

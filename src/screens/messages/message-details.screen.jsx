@@ -4,6 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { Button } from "../../components"
 import { captureRef } from "react-native-view-shot"
 import { useRef } from "react"
+import { CameraRoll } from "@react-native-camera-roll/camera-roll"
 
 const MessageDetailsScreen = () => {
 	const route = useRoute()
@@ -24,6 +25,9 @@ const MessageDetailsScreen = () => {
 			quality: 0.8,
 		})
 			.then(uri => {
+				CameraRoll.save(uri, {
+					type: "photo",
+				})
 				console.log("Image saved to", uri)
 			})
 			.catch(e => {

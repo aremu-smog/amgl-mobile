@@ -3,12 +3,13 @@ import { ResponseComponent } from "./components"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { Button } from "../../components"
 import { captureRef } from "react-native-view-shot"
-import { useRef } from "react"
+import { useRef, useState } from "react"
 import { CameraRoll } from "@react-native-camera-roll/camera-roll"
 
 const MessageDetailsScreen = () => {
 	const route = useRoute()
 	const navigation = useNavigation()
+	const [isSavingImage, setIsSavingImage] = useState(false)
 
 	const ref = useRef()
 
@@ -20,41 +21,54 @@ const MessageDetailsScreen = () => {
 	}
 
 	const downloadImage = () => {
+		setIsSavingImage(true)
 		captureRef(ref, {
 			format: "png",
 			quality: 0.8,
 		})
-			.then(uri => {
+			.then(async uri => {
 				CameraRoll.save(uri, {
 					type: "photo",
 				})
-				console.log("Image saved to", uri)
+					.then(() => {
+						console.log("Imag save tod camer roll")
+					})
+					.catch(e => {
+						console.log("Couldn't save image", e.message)
+					})
 			})
 			.catch(e => {
 				console.log("Error occured", e.message)
+			})
+			.finally(() => {
+				setIsSavingImage(false)
 			})
 	}
 	return (
 		<SafeAreaView style={{ flex: 1 }}>
 			<View style={styles.wrapper} ref={ref}>
 				<View style={styles.header}>
-					<Pressable onPress={goBack} style={{ padding: 5, marginRight: -10 }}>
-						<Image
-							source={require("../../../assets/close.png")}
-							style={{
-								width: 20,
-								height: 20,
-								opacity: 0.3,
-							}}
-						/>
-					</Pressable>
+					{!isSavingImage && (
+						<Pressable
+							onPress={goBack}
+							style={{ padding: 5, marginRight: -10 }}>
+							<Image
+								source={require("../../../assets/close.png")}
+								style={{
+									width: 20,
+									height: 20,
+									opacity: 0.3,
+								}}
+							/>
+						</Pressable>
+					)}
 				</View>
 				<ResponseComponent question={question} answer={response} />
 				<View
 					style={{
 						flex: 0.3,
 					}}>
-					<Button text='Download' onPress={downloadImage} />
+					{!isSavingImage && <Button text='Download' onPress={downloadImage} />}
 				</View>
 			</View>
 		</SafeAreaView>
@@ -74,5 +88,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "space-between",
 		paddingHorizontal: 20,
+		backgroundColor: "#fff",
 	},
 })

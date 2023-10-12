@@ -5,6 +5,7 @@ import { Button } from "../../components"
 import { captureRef } from "react-native-view-shot"
 import { useRef, useState } from "react"
 import { CameraRoll } from "@react-native-camera-roll/camera-roll"
+import { showToast } from "../../utils"
 
 const MessageDetailsScreen = () => {
 	const route = useRoute()
@@ -31,7 +32,8 @@ const MessageDetailsScreen = () => {
 					type: "photo",
 				})
 					.then(() => {
-						console.log("Imag save tod camer roll")
+						showToast("Image saved to gallery", 2000)
+						console.log("Image save to camera roll")
 					})
 					.catch(e => {
 						console.log("Couldn't save image", e.message)

@@ -4,13 +4,12 @@ import {
 	StyleSheet,
 	Dimensions,
 	Pressable,
-	ToastAndroid,
-	Platform,
 	Image,
 } from "react-native"
 import * as Clipboard from "expo-clipboard"
 import { useState } from "react"
 import { LinearGradient } from "expo-linear-gradient"
+import { showToast } from "../../../utils"
 const QuestionComponent = ({ item, index }) => {
 	const { slug, description, url, primary_color, secondary_color } = item
 
@@ -76,17 +75,6 @@ const InfoSection = ({ url, color }) => {
 			</Pressable>
 		</View>
 	)
-}
-
-/**
- *
- * @param {string} message
- * @param {number} duration
- */
-const showToast = (message, duration) => {
-	if (Platform.OS === "android") {
-		ToastAndroid.show(message, duration)
-	}
 }
 
 /**

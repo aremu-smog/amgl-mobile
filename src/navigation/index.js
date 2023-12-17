@@ -6,6 +6,8 @@ import { StatusBar } from "expo-status-bar"
 import { useAuthContext } from "../context/auth.context"
 import { useState } from "react"
 import { SCREEN_NAMES } from "../screens/names"
+import { Linking } from "react-native"
+import * as Notifications from "expo-notifications"
 
 const Navigator = () => {
 	const { isAppReady, isAuthenticated } = useAuthContext()
@@ -32,7 +34,7 @@ const Navigator = () => {
 					//     return url;
 					//   }
 
-					// Handle URL from expo push notifications
+					// // Handle URL from expo push notifications
 					//   const response = await Notifications.getLastNotificationResponseAsync();
 
 					//   return response?.notification.request.content.data.url;

@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
 	container: {
 		borderRadius: BORDER_RADIUS_VALUE,
 		shadowColor: "black",
+		elevation: 15,
 	},
 
 	question: {

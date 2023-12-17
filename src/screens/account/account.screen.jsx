@@ -90,9 +90,10 @@ const generateRandomPosition = () => {
 const generateRandomAngle = Math.floor(Math.random() * 15)
 const FloatingElement = ({ text, delay }) => {
 	const [randomXPosition, setRandomXPosition] = useState(generateRandomPosition)
-
 	const [randomRotationValue, setRandomRotationValue] =
 		useState(generateRandomAngle)
+
+	const textRef = useRef(null)
 
 	const translateY = useSharedValue(-200)
 	const OFFSET = 500
@@ -103,6 +104,23 @@ const FloatingElement = ({ text, delay }) => {
 
 	useFocusEffect(
 		useCallback(() => {
+			const textElement = textRef.current
+			let textElementWidth = 0
+			textElement.measure((x, y, width, height) => {
+				textElementWidth = width
+			})
+
+			const halfWidth = textElementWidth / 2
+
+			const detectEdgePosition = () => {
+				const position = generateRandomPosition()
+				if (position > 150) {
+					return position - halfWidth
+				}
+
+				return position
+			}
+
 			translateY.value = withRepeat(
 				withDelay(
 					delay * 500,
@@ -114,7 +132,7 @@ const FloatingElement = ({ text, delay }) => {
 						},
 						finished => {
 							if (finished) {
-								runOnJS(setRandomXPosition)(generateRandomPosition)
+								runOnJS(setRandomXPosition)(detectEdgePosition)
 								runOnJS(setRandomRotationValue)(generateRandomAngle)
 							}
 						}
@@ -128,6 +146,7 @@ const FloatingElement = ({ text, delay }) => {
 	return (
 		<Animated.View style={[style]}>
 			<Text
+				ref={textRef}
 				style={{
 					backgroundColor: "white",
 					borderRadius: 200,

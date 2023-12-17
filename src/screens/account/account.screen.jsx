@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
-import { View, Text, Image } from "react-native"
+import { View, Text, Image, Dimensions } from "react-native"
 import { Button } from "../../components"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
@@ -23,16 +23,36 @@ const fallingElements = [
 	"confessions",
 	"friendship",
 	"anonymous",
+	"bestie bestie",
 	"deep secrets",
 	"shoot your shot",
+	"best friends 4 life",
+	"bants n cruise",
+	"dey play",
+	"safe space?",
 ]
+const screenWidth = Dimensions.get("window").width
+const containerPadding = 20
+console.log({ screenWidth })
+const rightEdgeOfGradient = screenWidth - containerPadding * 2
+const leftOfEdgeOfGradient = 0
 const AccountScreen = () => {
 	const { user } = useAuthContext()
+	const gradientRef = useRef(null)
+	const containerHeight = useRef(464)
+
+	useFocusEffect(
+		useCallback(() => {
+			gradientRef.current.measure((x, y, width, height) => {
+				containerHeight.current = height
+			})
+		}, [])
+	)
 
 	return (
 		<View
 			style={{
-				padding: 20,
+				padding: containerPadding,
 				flex: 1,
 				justifyContent: "space-between",
 			}}>
@@ -60,7 +80,7 @@ const AccountScreen = () => {
 					</Text>
 				</View>
 			</View>
-			<View style={{ flex: 1, marginVertical: 24 }}>
+			<View style={{ flex: 1, marginVertical: 24 }} ref={gradientRef}>
 				<LinearGradient
 					colors={["#ec1187", "#ff8d10"]}
 					style={{
@@ -70,7 +90,12 @@ const AccountScreen = () => {
 						overflow: "hidden",
 					}}>
 					{fallingElements.map((item, index) => (
-						<FloatingElement key={item} text={item} delay={index} />
+						<FloatingElement
+							key={`${item.replace(/\s/g, "-")}${index}`}
+							text={item}
+							delay={index}
+							containerHeight={containerHeight.current}
+						/>
 					))}
 				</LinearGradient>
 			</View>
@@ -85,18 +110,19 @@ const AccountScreen = () => {
 }
 
 const generateRandomPosition = () => {
-	return Math.floor(Math.random() * 300)
+	return Math.floor(Math.random() * (screenWidth / 2))
 }
-const generateRandomAngle = Math.floor(Math.random() * 15)
-const FloatingElement = ({ text, delay }) => {
+const generateRandomAngle = () => Math.floor(Math.random() * 15)
+const FloatingElement = ({ text, delay, containerHeight }) => {
 	const [randomXPosition, setRandomXPosition] = useState(generateRandomPosition)
 	const [randomRotationValue, setRandomRotationValue] =
 		useState(generateRandomAngle)
 
 	const textRef = useRef(null)
+	const textElementWidth = useRef(0)
 
 	const translateY = useSharedValue(-200)
-	const OFFSET = 500
+	const OFFSET = containerHeight
 
 	const style = useAnimatedStyle(() => ({
 		transform: [{ translateY: translateY.value }],
@@ -105,25 +131,36 @@ const FloatingElement = ({ text, delay }) => {
 	useFocusEffect(
 		useCallback(() => {
 			const textElement = textRef.current
-			let textElementWidth = 0
 			textElement.measure((x, y, width, height) => {
-				textElementWidth = width
+				textElementWidth.current = width
 			})
+		}, [])
+	)
 
-			const halfWidth = textElementWidth / 2
+	const DELAY = delay * 500
 
+	useFocusEffect(
+		useCallback(() => {
 			const detectEdgePosition = () => {
+				const halfWidth = textElementWidth.current / 2
 				const position = generateRandomPosition()
-				if (position > 150) {
-					return position - halfWidth
-				}
+
+				const distanceFromRightEdge =
+					rightEdgeOfGradient - position + containerPadding
+
+				// if (
+				// 	position > rightEdgeOfGradient ||
+				// 	distanceFromRightEdge < halfWidth
+				// ) {
+				// 	return rightEdgeOfGradient - halfWidth
+				// }
 
 				return position
 			}
 
 			translateY.value = withRepeat(
 				withDelay(
-					delay * 500,
+					DELAY,
 					withTiming(
 						OFFSET,
 						{
@@ -132,8 +169,8 @@ const FloatingElement = ({ text, delay }) => {
 						},
 						finished => {
 							if (finished) {
-								runOnJS(setRandomXPosition)(detectEdgePosition)
 								runOnJS(setRandomRotationValue)(generateRandomAngle)
+								runOnJS(setRandomXPosition)(detectEdgePosition)
 							}
 						}
 					)
@@ -155,6 +192,7 @@ const FloatingElement = ({ text, delay }) => {
 					fontSize: 24,
 					lineHeight: 24,
 					fontWeight: "bold",
+					flexGrow: 0,
 					position: "absolute",
 					transform: [
 						{ rotate: `${randomRotationValue}deg` },

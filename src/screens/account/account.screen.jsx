@@ -1,13 +1,31 @@
-import React, { useState } from "react"
-import { View, Text, Alert, Image } from "react-native"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { View, Text, Image } from "react-native"
 import { Button } from "../../components"
 import { supabaseApp } from "../../api/supabase"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import Constants from "expo-constants"
+import { useFocusEffect } from "@react-navigation/native"
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+	withRepeat,
+	withTiming,
+	Easing,
+	withDelay,
+	runOnJS,
+} from "react-native-reanimated"
 
 const profileImage = require("../../../assets/profile.png")
 
+const fallingElements = [
+	"rizzme",
+	"confessions",
+	"friendship",
+	"anonymous",
+	"deep secrets",
+	"shoot your shot",
+]
 const AccountScreen = () => {
 	const { user } = useAuthContext()
 
@@ -41,18 +59,20 @@ const AccountScreen = () => {
 						{user?.username}
 					</Text>
 				</View>
-
-				{/* <View>
-					<Button
-						text='Enable Push Notifications'
-						onPress={enablePushNotification}
-					/>
-				</View> */}
 			</View>
 			<View style={{ flex: 1, marginVertical: 24 }}>
 				<LinearGradient
 					colors={["#ec1187", "#ff8d10"]}
-					style={{ flex: 1, borderRadius: 20 }}></LinearGradient>
+					style={{
+						flex: 1,
+						borderRadius: 20,
+						position: "relative",
+						overflow: "hidden",
+					}}>
+					{fallingElements.map((item, index) => (
+						<FloatingElement key={item} text={item} delay={index} />
+					))}
+				</LinearGradient>
 			</View>
 			<View>
 				<LogoutButton />
@@ -61,6 +81,70 @@ const AccountScreen = () => {
 				</Text>
 			</View>
 		</View>
+	)
+}
+
+const generateRandomPosition = () => {
+	return Math.floor(Math.random() * 300)
+}
+const generateRandomAngle = Math.floor(Math.random() * 15)
+const FloatingElement = ({ text, delay }) => {
+	const [randomXPosition, setRandomXPosition] = useState(generateRandomPosition)
+
+	const [randomRotationValue, setRandomRotationValue] =
+		useState(generateRandomAngle)
+
+	const translateY = useSharedValue(-200)
+	const OFFSET = 500
+
+	const style = useAnimatedStyle(() => ({
+		transform: [{ translateY: translateY.value }],
+	}))
+
+	useFocusEffect(
+		useCallback(() => {
+			translateY.value = withRepeat(
+				withDelay(
+					delay * 500,
+					withTiming(
+						OFFSET,
+						{
+							duration: 7500,
+							easing: Easing.linear,
+						},
+						finished => {
+							if (finished) {
+								runOnJS(setRandomXPosition)(generateRandomPosition)
+								runOnJS(setRandomRotationValue)(generateRandomAngle)
+							}
+						}
+					)
+				),
+				-1
+			)
+		}, [])
+	)
+
+	return (
+		<Animated.View style={[style]}>
+			<Text
+				style={{
+					backgroundColor: "white",
+					borderRadius: 200,
+					paddingVertical: 4,
+					paddingHorizontal: 12,
+					fontSize: 24,
+					lineHeight: 24,
+					fontWeight: "bold",
+					position: "absolute",
+					transform: [
+						{ rotate: `${randomRotationValue}deg` },
+						{ translateX: randomXPosition },
+					],
+				}}>
+				{text}
+			</Text>
+		</Animated.View>
 	)
 }
 

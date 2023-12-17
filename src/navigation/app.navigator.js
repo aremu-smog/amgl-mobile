@@ -5,7 +5,7 @@ import {
 	MessageDetailsScreen,
 	MessagesScreen,
 	PlayScreen,
-	SettingsScreen,
+	AccountScreen,
 } from "../screens"
 import { SCREEN_NAMES } from "../screens/names"
 const Tab = createMaterialTopTabNavigator()
@@ -46,7 +46,7 @@ const TabScreens = () => {
 			}}>
 			<Tab.Screen name={SCREEN_NAMES.PLAY} component={PlayScreen} />
 			<Tab.Screen name={SCREEN_NAMES.MESSAGES} component={MessagesScreen} />
-			<Tab.Screen name={SCREEN_NAMES.SETTINGS} component={SettingsScreen} />
+			<Tab.Screen name={SCREEN_NAMES.ACCOUNT} component={AccountScreen} />
 		</Tab.Navigator>
 	)
 }

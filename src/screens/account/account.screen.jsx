@@ -8,7 +8,7 @@ import Constants from "expo-constants"
 
 const profileImage = require("../../../assets/profile.png")
 
-const SettingsScreen = () => {
+const AccountScreen = () => {
 	const { user } = useAuthContext()
 
 	return (
@@ -85,4 +85,4 @@ const LogoutButton = () => {
 	)
 }
 
-export default SettingsScreen
+export default AccountScreen

@@ -5,6 +5,7 @@ import Constants from "expo-constants"
 
 import { supabaseApp } from "../../../api/supabase"
 import { useAuthContext } from "../../../context/auth.context"
+import { Alert } from "react-native"
 
 /**
  * @typedef {Object} Response
@@ -13,8 +14,9 @@ import { useAuthContext } from "../../../context/auth.context"
  * @returns {Response}
  */
 export const useEnablePushNotification = () => {
-	const { setUser } = useAuthContext()
+	const { user, setUser } = useAuthContext()
 
+	const user_id = user?.id
 	const enablePushNotification = useCallback(() => {
 		registerForPushNotificationsAsync().then(async token => {
 			try {

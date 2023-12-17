@@ -4,4 +4,5 @@ export const SCREEN_NAMES = {
 	LOGIN: "Login",
 	REGISTER: "Register",
 	SETTINGS: "Settings",
+	ACCOUNT: "Account",
 }

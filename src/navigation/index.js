@@ -4,10 +4,6 @@ import AuthNavigator from "./auth.navigator"
 import { SafeAreaView, Platform, View, ActivityIndicator } from "react-native"
 import { StatusBar } from "expo-status-bar"
 import { useAuthContext } from "../context/auth.context"
-import { useState } from "react"
-import { SCREEN_NAMES } from "../screens/names"
-import { Linking } from "react-native"
-import * as Notifications from "expo-notifications"
 
 const Navigator = () => {
 	const { isAppReady, isAuthenticated } = useAuthContext()
@@ -24,47 +20,7 @@ const Navigator = () => {
 		)
 	}
 	return (
-		<NavigationContainer
-			linking={{
-				config: {},
-				async getInitialURL() {
-					// 		const url = await Linking.getInitialURL();
-
-					//   if (url != null) {
-					//     return url;
-					//   }
-
-					// // Handle URL from expo push notifications
-					//   const response = await Notifications.getLastNotificationResponseAsync();
-
-					//   return response?.notification.request.content.data.url;
-					return SCREEN_NAMES.MESSAGES
-				},
-				subscribe(listener) {
-					const onReceiveURL = ({ url }) => listener(url)
-
-					const eventListenerSubscription = Linking.addEventListener(
-						"url",
-						onReceiveURL
-					)
-					const subscription =
-						Notifications.addNotificationResponseReceivedListener(response => {
-							const url = response.notification.request.content.data.url
-
-							// Any custom logic to see whether the URL needs to be handled
-							//...
-
-							// Let React Navigation handle the URL
-							listener(url)
-						})
-
-					return () => {
-						// Clean up the event listeners
-						eventListenerSubscription.remove()
-						subscription.remove()
-					}
-				},
-			}}>
+		<NavigationContainer>
 			{isAuthenticated ? (
 				<SafeAreaView style={{ flex: 1, marginTop: verticalPadding }}>
 					<AppNavigator />

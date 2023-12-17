@@ -16,11 +16,9 @@ import { useState } from "react"
  */
 export const useResponses = ({ user_id }) => {
 	const [messages, setMessages] = useState([])
-	const [isFetching, setIsFetching] = useState(false)
+	const [isFetching, setIsFetching] = useState(true)
 
 	const fetchResponses = async () => {
-		setIsFetching(true)
-
 		const { data, error } = await supabaseApp
 			.from("responses")
 			.select("id, question_id, details, viewed")

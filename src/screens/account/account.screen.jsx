@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useRef, useState } from "react"
 import { View, Text, Image, Dimensions } from "react-native"
 import { Button } from "../../components"
 import { supabaseApp } from "../../api/supabase"
@@ -33,7 +33,7 @@ const fallingElements = [
 ]
 const screenWidth = Dimensions.get("window").width
 const containerPadding = 20
-console.log({ screenWidth })
+
 const rightEdgeOfGradient = screenWidth - containerPadding * 2
 const leftOfEdgeOfGradient = 0
 const AccountScreen = () => {
@@ -102,7 +102,7 @@ const AccountScreen = () => {
 			<View>
 				<LogoutButton />
 				<Text style={{ opacity: 0.5, textAlign: "center" }}>
-					v{Constants.manifest.version}
+					v{Constants.expoConfig.version}
 				</Text>
 			</View>
 		</View>
@@ -181,7 +181,7 @@ const FloatingElement = ({ text, delay, containerHeight }) => {
 	)
 
 	return (
-		<Animated.View style={[style]}>
+		<Animated.View style={[style, { borderRadius: 200 }]}>
 			<Text
 				ref={textRef}
 				style={{

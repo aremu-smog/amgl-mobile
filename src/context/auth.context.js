@@ -94,7 +94,7 @@ export const AuthContextProvider = ({ children }) => {
 				const { data, error } = await supabaseApp
 					.from("user_alias")
 					.insert({
-						user_id: user.id,
+						user_id: user?.id,
 						name: username,
 					})
 					.select()

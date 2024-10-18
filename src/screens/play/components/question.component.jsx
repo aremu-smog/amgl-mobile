@@ -61,7 +61,7 @@ const InfoSection = ({ url, color }) => {
 				onPressOut={() => {
 					setTimeout(() => {
 						setIsPressed(false)
-					}, 500)
+					}, 1_000)
 				}}>
 				<Text
 					style={[
@@ -70,7 +70,7 @@ const InfoSection = ({ url, color }) => {
 							color: color,
 						},
 					]}>
-					copy Link
+					{isPressed ? "copied!" : "copy link"}
 				</Text>
 			</Pressable>
 		</View>

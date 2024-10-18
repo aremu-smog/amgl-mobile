@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store"
 import { createClient } from "@supabase/supabase-js"
 // import { SUPABASE_KEY } from "@env"
 
-const supabaseUrl = "https://yscprznehevulantlliu.supabase.co"
+const supabaseUrl = "https://aytpjrurgknnvunschbn.supabase.co"
 const supabaseKey = process.env.REACT_APP_SUPABASE_KEY
 
 const ExpoSecureStoreAdapter = {

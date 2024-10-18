@@ -8,7 +8,6 @@ import {
 } from "react-native"
 import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
-import { useQuestionsContext } from "../../context/questions.context"
 import { useFocusEffect } from "@react-navigation/native"
 import { MessagesLoading, NoMessages } from "./components"
 import {
@@ -16,6 +15,7 @@ import {
 	useEnablePushNotification,
 	useResponses,
 } from "./hooks"
+import * as Device from "expo-device"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
 
@@ -39,7 +39,7 @@ const MessagesScreen = () => {
 	)
 	useFocusEffect(
 		useCallback(() => {
-			if (!user.push_notification_enabled) {
+			if (!user.push_notification_enabled && Device.isDevice) {
 				/**
 				 * Update Logic for PN enabling and disabling
 				 */

@@ -40,13 +40,11 @@ export default function App() {
 	}, [])
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<SafeAreaView style={{ flex: 1 }}>
-				<AuthContextProvider>
-					<QuestionsContextProvider>
-						<Navigator />
-					</QuestionsContextProvider>
-				</AuthContextProvider>
-			</SafeAreaView>
+			<AuthContextProvider>
+				<QuestionsContextProvider>
+					<Navigator />
+				</QuestionsContextProvider>
+			</AuthContextProvider>
 		</GestureHandlerRootView>
 	)
 }

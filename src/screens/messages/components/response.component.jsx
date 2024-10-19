@@ -27,7 +27,10 @@ const styles = StyleSheet.create({
 	container: {
 		borderRadius: BORDER_RADIUS_VALUE,
 		shadowColor: "black",
+		shadowRadius: 3,
 		elevation: 15,
+		shadowOpacity: 0.2,
+		shadowOffset: { width: 0, height: 3 },
 	},
 
 	question: {

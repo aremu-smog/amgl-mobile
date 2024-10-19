@@ -4,7 +4,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { Button } from "../../components"
 import { captureRef } from "react-native-view-shot"
 import { useRef, useState } from "react"
-// import { CameraRoll } from "@react-native-camera-roll/camera-roll"
+import * as MediaLibrary from "expo-media-library"
 import { showToast } from "../../utils"
 
 const MessageDetailsScreen = () => {
@@ -23,28 +23,31 @@ const MessageDetailsScreen = () => {
 
 	const downloadImage = () => {
 		setIsSavingImage(true)
-		captureRef(ref, {
-			format: "png",
-			quality: 0.8,
-		})
-			.then(async uri => {
-				// CameraRoll.save(uri, {
-				// 	type: "photo",
-				// })
-				// 	.then(() => {
-				// 		showToast("Image saved to gallery", 2000)
-				// 		console.log("Image save to camera roll")
-				// 	})
-				// 	.catch(e => {
-				// 		console.log("Couldn't save image", e.message)
-				// 	})
+
+		/**
+		 * Artificial delay to remove uneeded elements from image
+		 */
+		setTimeout(() => {
+			captureRef(ref, {
+				format: "png",
+				quality: 0.8,
 			})
-			.catch(e => {
-				console.log("Error occured", e.message)
-			})
-			.finally(() => {
-				setIsSavingImage(false)
-			})
+				.then(async uri => {
+					MediaLibrary.saveToLibraryAsync(uri)
+						.then(() => {
+							showToast("Image saved to gallery", 2000)
+						})
+						.catch(e => {
+							console.log("Error saving image", e.message)
+						})
+				})
+				.catch(e => {
+					console.log("Error occured", e.message)
+				})
+				.finally(() => {
+					setIsSavingImage(false)
+				})
+		}, 500)
 	}
 	return (
 		<SafeAreaView style={{ flex: 1 }}>

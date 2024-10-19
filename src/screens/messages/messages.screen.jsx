@@ -10,6 +10,7 @@ import { useAuthContext } from "../../context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useFocusEffect } from "@react-navigation/native"
 import { MessagesLoading, NoMessages } from "./components"
+
 import {
 	useDetailsPage,
 	useEnablePushNotification,

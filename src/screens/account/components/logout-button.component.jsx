@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { supabaseApp } from "../../../api/supabase"
-import { Button } from "../../../components"
+import { supabaseApp } from "@/api/supabase"
+import { Button } from "@/components"
 
 export const LogoutButton = () => {
 	const [isLoading, setIsLoading] = useState(false)

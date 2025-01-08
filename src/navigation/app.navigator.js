@@ -6,8 +6,8 @@ import {
 	MessagesScreen,
 	PlayScreen,
 	AccountScreen,
-} from "../screens"
-import { SCREEN_NAMES } from "../screens/names"
+} from "@/screens"
+import { SCREEN_NAMES } from "@/screens/names"
 const Tab = createMaterialTopTabNavigator()
 
 const AppStack = createNativeStackNavigator()

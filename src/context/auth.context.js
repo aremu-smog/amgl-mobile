@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react"
 
-import { supabaseApp } from "../api/supabase"
+import { supabaseApp } from "@/api/supabase"
 import { Alert } from "react-native"
 
 const AuthContext = createContext()

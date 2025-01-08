@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet, Pressable, SafeAreaView } from "react-native"
 import { ResponseComponent } from "./components"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import { Button } from "../../components"
+import { Button } from "@/components"
 import { captureRef } from "react-native-view-shot"
 import { useRef, useState } from "react"
 import * as MediaLibrary from "expo-media-library"

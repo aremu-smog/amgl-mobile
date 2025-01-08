@@ -3,7 +3,7 @@ import AppNavigator from "./app.navigator"
 import AuthNavigator from "./auth.navigator"
 import { SafeAreaView, View, ActivityIndicator } from "react-native"
 
-import { useAuthContext } from "../context/auth.context"
+import { useAuthContext } from "@/context/auth.context"
 
 const Navigator = () => {
 	const { isAppReady, isAuthenticated } = useAuthContext()

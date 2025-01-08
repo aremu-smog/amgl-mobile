@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
-import { MessagesScreen, MessageDetailsScreen } from "../screens"
+import { MessagesScreen } from "@/screens"
 
 const MessageStack = createNativeStackNavigator()
 const MessagesNavigator = () => {

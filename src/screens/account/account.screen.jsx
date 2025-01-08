@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from "react"
-import { View, Text, Image, Dimensions } from "react-native"
-import { useAuthContext } from "../../context/auth.context"
+import { View, Text, Image } from "react-native"
+import { useAuthContext } from "@/context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import Constants from "expo-constants"
 import { useFocusEffect } from "@react-navigation/native"

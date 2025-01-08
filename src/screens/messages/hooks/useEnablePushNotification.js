@@ -3,10 +3,10 @@ import * as Device from "expo-device"
 import * as Notifications from "expo-notifications"
 import Constants from "expo-constants"
 
-import { supabaseApp } from "../../../api/supabase"
-import { useAuthContext } from "../../../context/auth.context"
+import { supabaseApp } from "@/api/supabase"
+import { useAuthContext } from "@/context/auth.context"
 import { Alert } from "react-native"
-import { useOS } from "../../../hooks"
+import { useOS } from "@/hooks"
 
 /**
  * @typedef {Object} Response

@@ -1,16 +1,18 @@
-import { View, Text } from "react-native"
+import { View } from "react-native"
 import { useEffect } from "react"
 import Carousel from "react-native-reanimated-carousel"
 
-import { supabaseApp } from "../../api/supabase"
+import { supabaseApp } from "@/api/supabase"
 import { QuestionComponent } from "./components"
 import { SLIDER_WIDTH } from "./components/question.component"
-import { useAuthContext } from "../../context/auth.context"
-import { useQuestionsContext } from "../../context/questions.context"
+import { useAuthContext } from "@/context/auth.context"
+import { useQuestionsContext } from "@/context/questions.context"
 import { WEBSITE_BASE_URL } from "@env"
+import { PageLoader } from "@/components"
 
 const PlayScreen = () => {
 	const { questions, setQuestions } = useQuestionsContext()
+	const hasQuestions = questions.length > 0
 
 	const { user } = useAuthContext()
 	const { username } = user ?? {}
@@ -36,29 +38,26 @@ const PlayScreen = () => {
 		}
 	}
 	useEffect(() => {
-		fetchQuestions(username)
+		if (!!username) {
+			fetchQuestions(username)
+		}
 	}, [username])
 
+	if (!hasQuestions) return <PageLoader />
 	return (
 		<View
 			style={{
 				paddingTop: 30,
 			}}>
-			{questions ? (
-				<Carousel
-					loop
-					showLength
-					data={questions}
-					renderItem={QuestionComponent}
-					pagingEnabled={true}
-					width={SLIDER_WIDTH}
-					enabled
-				/>
-			) : (
-				<View>
-					<Text>Loading...</Text>
-				</View>
-			)}
+			<Carousel
+				loop
+				showLength
+				data={questions}
+				renderItem={QuestionComponent}
+				pagingEnabled={true}
+				width={SLIDER_WIDTH}
+				enabled
+			/>
 		</View>
 	)
 }

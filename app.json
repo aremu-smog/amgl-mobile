@@ -1,7 +1,7 @@
 {
 	"expo": {
 		"name": "Am Gonna Lie",
-		"slug": "amgl",
+		"slug": "amgl-pof",
 		"version": "1.0.0",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
@@ -14,7 +14,7 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.aremusmog.amgl",
+			"bundleIdentifier": "com.aremu_smog.amglpof",
 			"infoPlist": [
 				{
 					"NSPhotoLibraryUsageDescription": "This app allow users to save images in the photo library"
@@ -27,7 +27,7 @@
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
 			},
-			"package": "com.aremusmog.amgl",
+			"package": "com.aremu_smog.amglpof",
 			"permissions": ["android.permission.POST_NOTIFICATIONS"]
 		},
 		"web": {

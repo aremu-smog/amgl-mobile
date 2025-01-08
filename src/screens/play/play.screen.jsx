@@ -4,7 +4,7 @@ import Carousel from "react-native-reanimated-carousel"
 
 import { supabaseApp } from "../../api/supabase"
 import { QuestionComponent } from "./components"
-import { ITEM_WIDTH, SLIDER_WIDTH } from "./components/question.component"
+import { SLIDER_WIDTH } from "./components/question.component"
 import { useAuthContext } from "../../context/auth.context"
 import { useQuestionsContext } from "../../context/questions.context"
 import { WEBSITE_BASE_URL } from "@env"

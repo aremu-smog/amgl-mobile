@@ -5,13 +5,15 @@ import { Button } from "../../components"
 import { captureRef } from "react-native-view-shot"
 import { useRef, useState } from "react"
 import * as MediaLibrary from "expo-media-library"
-import { showToast } from "../../utils"
+
+import { useToast } from "../../hooks"
 
 const MessageDetailsScreen = () => {
 	const route = useRoute()
 	const navigation = useNavigation()
 	const [isSavingImage, setIsSavingImage] = useState(false)
 
+	const { showToast } = useToast()
 	const ref = useRef()
 
 	const { params = {} } = route

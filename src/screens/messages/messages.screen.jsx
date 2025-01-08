@@ -17,6 +17,7 @@ import {
 	useResponses,
 } from "./hooks"
 import * as Device from "expo-device"
+import { useOS } from "../../hooks"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
 
@@ -24,6 +25,7 @@ const MessagesScreen = () => {
 	const { user } = useAuthContext()
 
 	const { enablePushNotification } = useEnablePushNotification()
+	const { isAndroid } = useOS()
 
 	const user_id = user?.id
 	const { isFetching, messages, fetchResponses } = useResponses({ user_id })

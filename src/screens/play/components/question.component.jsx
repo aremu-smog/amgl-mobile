@@ -6,10 +6,10 @@ import {
 	Pressable,
 	Image,
 } from "react-native"
-import * as Clipboard from "expo-clipboard"
 import { useState } from "react"
 import { LinearGradient } from "expo-linear-gradient"
-import { showToast } from "../../../utils"
+import { useClipboard } from "../../../hooks"
+
 const QuestionComponent = ({ item, index }) => {
 	const { slug, description, url, primary_color, secondary_color } = item
 
@@ -40,6 +40,7 @@ const QuestionComponent = ({ item, index }) => {
 
 const InfoSection = ({ url, color }) => {
 	const [isPressed, setIsPressed] = useState(false)
+	const { copyToClipboard } = useClipboard()
 	return (
 		<View style={infoStyles.container}>
 			<Text style={infoStyles.instruction}>Instruction: Copy your link</Text>
@@ -75,19 +76,6 @@ const InfoSection = ({ url, color }) => {
 			</Pressable>
 		</View>
 	)
-}
-
-/**
- *
- * @param {string} text
- */
-const copyToClipboard = async text => {
-	try {
-		await Clipboard.setStringAsync(text)
-		showToast("Link copied!", 2000)
-	} catch (e) {
-		showToast("Unable to copy link", 2000)
-	}
 }
 
 const emojis = {

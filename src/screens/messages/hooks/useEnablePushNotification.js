@@ -6,6 +6,7 @@ import Constants from "expo-constants"
 import { supabaseApp } from "../../../api/supabase"
 import { useAuthContext } from "../../../context/auth.context"
 import { Alert } from "react-native"
+import { useOS } from "../../../hooks"
 
 /**
  * @typedef {Object} Response
@@ -15,10 +16,10 @@ import { Alert } from "react-native"
  */
 export const useEnablePushNotification = () => {
 	const { user, setUser } = useAuthContext()
-
+	const { isAndroid } = useOS()
 	const user_id = user?.id
 	const enablePushNotification = useCallback(() => {
-		registerForPushNotificationsAsync().then(async token => {
+		registerForPushNotificationsAsync(isAndroid).then(async token => {
 			try {
 				const { data, error } = await supabaseApp
 					.from("push_notifications")
@@ -59,7 +60,7 @@ export const useEnablePushNotification = () => {
 	}
 }
 
-async function registerForPushNotificationsAsync() {
+async function registerForPushNotificationsAsync(isAndroid) {
 	let token
 
 	if (Device.isDevice) {
@@ -83,7 +84,7 @@ async function registerForPushNotificationsAsync() {
 		alert("Must use physical device for Push Notifications")
 	}
 
-	if (Platform.OS === "android") {
+	if (isAndroid) {
 		Notifications.setNotificationChannelAsync("default", {
 			name: "default",
 			importance: Notifications.AndroidImportance.MAX,

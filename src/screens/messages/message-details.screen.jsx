@@ -6,7 +6,7 @@ import { captureRef } from "react-native-view-shot"
 import { useRef, useState } from "react"
 import * as MediaLibrary from "expo-media-library"
 
-import { useToast } from "../../hooks"
+import { useToast } from "@/hooks"
 
 const MessageDetailsScreen = () => {
 	const route = useRoute()

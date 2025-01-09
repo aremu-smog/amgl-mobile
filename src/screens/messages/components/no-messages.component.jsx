@@ -1,7 +1,7 @@
 import { View, Text, Image } from "react-native"
-import { Button } from "../../../components"
+import { Button } from "@/components"
 import { useNavigation } from "@react-navigation/native"
-import { SCREEN_NAMES } from "../../names"
+import { SCREEN_NAMES } from "@/names"
 
 const loveIconSrc = require("../../../../assets/love-letter.png")
 const NoMessages = () => {

@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native"
 import { useCallback } from "react"
 
-import { useQuestionsContext } from "../../../context/questions.context"
-import { supabaseApp } from "../../../api/supabase"
+import { useQuestionsContext } from "@/context/questions.context"
+import { supabaseApp } from "@/api/supabase"
 
 /**
  * @typedef {Object} Response

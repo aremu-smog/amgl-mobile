@@ -1,4 +1,4 @@
-import { supabaseApp } from "../../../api/supabase"
+import { supabaseApp } from "@/api/supabase"
 import { useState } from "react"
 
 /**

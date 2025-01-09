@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	Alert,
 } from "react-native"
-import { useAuthContext } from "../../context/auth.context"
+import { useAuthContext } from "@/context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useFocusEffect } from "@react-navigation/native"
 import { MessagesLoading, NoMessages } from "./components"
@@ -17,7 +17,7 @@ import {
 	useResponses,
 } from "./hooks"
 import * as Device from "expo-device"
-import { useOS } from "../../hooks"
+import { useOS } from "@/hooks"
 
 const loveIconSrc = require("../../../assets/love-letter.png")
 

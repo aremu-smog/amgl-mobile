@@ -1,6 +1,6 @@
 import { View, StyleSheet, Text, Pressable } from "react-native"
-import { Button, Input } from "../../components"
-import { useAuthContext } from "../../context/auth.context"
+import { Button, Input } from "@/components"
+import { useAuthContext } from "@/context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useNavigation } from "@react-navigation/native"
 import { Formik } from "formik"

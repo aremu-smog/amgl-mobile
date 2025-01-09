@@ -8,7 +8,7 @@ import {
 } from "react-native"
 import { useState } from "react"
 import { LinearGradient } from "expo-linear-gradient"
-import { useClipboard } from "../../../hooks"
+import { useClipboard } from "@/hooks"
 
 const QuestionComponent = ({ item, index }) => {
 	const { slug, description, url, primary_color, secondary_color } = item

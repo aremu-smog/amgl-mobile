@@ -3,7 +3,7 @@ import { Button } from "@/components"
 import { useNavigation } from "@react-navigation/native"
 import { SCREEN_NAMES } from "@/screens/names"
 
-const loveIconSrc = require("../../../../assets/love-letter.png")
+const loveIconSrc = require("@/assets/love-letter.png")
 const NoMessages = () => {
 	const navigation = useNavigation()
 	return (

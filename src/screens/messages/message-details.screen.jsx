@@ -60,7 +60,7 @@ const MessageDetailsScreen = () => {
 							onPress={goBack}
 							style={{ padding: 5, marginRight: -10 }}>
 							<Image
-								source={require("../../../assets/close.png")}
+								source={require("@/assets/close.png")}
 								style={{
 									width: 20,
 									height: 20,

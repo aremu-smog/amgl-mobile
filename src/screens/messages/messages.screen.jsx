@@ -19,7 +19,7 @@ import {
 import * as Device from "expo-device"
 import { useOS } from "@/hooks"
 
-const loveIconSrc = require("../../../assets/love-letter.png")
+const loveIconSrc = require("@/assets/love-letter.png")
 
 const MessagesScreen = () => {
 	const { user } = useAuthContext()

@@ -79,10 +79,10 @@ const InfoSection = ({ url, color }) => {
 }
 
 const emojis = {
-	anonymous: require("../../../../assets/emojis/anonymous.png"),
-	confessions: require("../../../../assets/emojis/confession.png"),
-	friendship: require("../../../../assets/emojis/friendship.png"),
-	rizzme: require("../../../../assets/emojis/rizz.png"),
+	anonymous: require("@/assets/emojis/anonymous.png"),
+	confessions: require("@/assets/emojis/confession.png"),
+	friendship: require("@/assets/emojis/friendship.png"),
+	rizzme: require("@/assets/emojis/rizz.png"),
 }
 
 const BORDER_RADIUS_VALUE = 24

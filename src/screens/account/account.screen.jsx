@@ -6,7 +6,7 @@ import Constants from "expo-constants"
 import { useFocusEffect } from "@react-navigation/native"
 import { FloatingText, LogoutButton } from "./components"
 
-const profileImage = require("../../../assets/profile.png")
+const profileImage = require("@/assets/profile.png")
 
 const fallingElements = [
 	"rizzme",

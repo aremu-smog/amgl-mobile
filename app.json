@@ -1,64 +1,62 @@
 {
-  "expo": {
-    "name": "Am Gonna Lie",
-    "slug": "amgl-pof",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.aremu_smog.amglpof",
-      "infoPlist": [
-        {
-          "NSPhotoLibraryUsageDescription": "This app allow users to save images in the photo library"
-        }
-      ]
-    },
-    "android": {
-      "googleServicesFile": "./google-services.json",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.aremu_smog.amglpof",
-      "permissions": [
-        "android.permission.POST_NOTIFICATIONS",
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE"
-      ]
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "207aa48a-db6c-4185-8005-0bc8cd7351e1"
-      }
-    },
-    "plugins": [
-      "expo-font",
-      "expo-secure-store",
-      [
-        "expo-media-library",
-        {
-          "savePhotosPermission": "Allow Am Gonna Lie to save photos."
-        }
-      ]
-    ],
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/207aa48a-db6c-4185-8005-0bc8cd7351e1"
-    }
-  }
+	"expo": {
+		"name": "Am Gonna Lie",
+		"slug": "amgl-pof",
+		"version": "1.0.0",
+		"orientation": "portrait",
+		"icon": "./src/assets/icon.png",
+		"userInterfaceStyle": "light",
+		"splash": {
+			"image": "./src/assets/splash.png",
+			"resizeMode": "contain",
+			"backgroundColor": "#ffffff"
+		},
+		"assetBundlePatterns": ["**/*"],
+		"ios": {
+			"supportsTablet": true,
+			"bundleIdentifier": "com.aremu_smog.amglpof",
+			"infoPlist": [
+				{
+					"NSPhotoLibraryUsageDescription": "This app allow users to save images in the photo library"
+				}
+			]
+		},
+		"android": {
+			"googleServicesFile": "./google-services.json",
+			"adaptiveIcon": {
+				"foregroundImage": "./src/assets/adaptive-icon.png",
+				"backgroundColor": "#ffffff"
+			},
+			"package": "com.aremu_smog.amglpof",
+			"permissions": [
+				"android.permission.POST_NOTIFICATIONS",
+				"android.permission.READ_EXTERNAL_STORAGE",
+				"android.permission.WRITE_EXTERNAL_STORAGE"
+			]
+		},
+		"web": {
+			"favicon": "./src/assets/favicon.png"
+		},
+		"extra": {
+			"eas": {
+				"projectId": "207aa48a-db6c-4185-8005-0bc8cd7351e1"
+			}
+		},
+		"plugins": [
+			"expo-font",
+			"expo-secure-store",
+			[
+				"expo-media-library",
+				{
+					"savePhotosPermission": "Allow Am Gonna Lie to save photos."
+				}
+			]
+		],
+		"runtimeVersion": {
+			"policy": "appVersion"
+		},
+		"updates": {
+			"url": "https://u.expo.dev/207aa48a-db6c-4185-8005-0bc8cd7351e1"
+		}
+	}
 }

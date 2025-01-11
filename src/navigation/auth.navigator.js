@@ -2,6 +2,7 @@ import React from "react"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { LoginScreen, RegisterScreen } from "@/screens"
 import { SCREEN_NAMES } from "@/screens/names"
+import { StatusBar } from "expo-status-bar"
 
 const AuthStack = createNativeStackNavigator()
 
@@ -10,6 +11,7 @@ const AuthNavigator = () => {
 		<AuthStack.Navigator
 			screenOptions={{
 				headerShown: false,
+				animation: "flip",
 			}}>
 			<AuthStack.Screen name={SCREEN_NAMES.LOGIN} component={LoginScreen} />
 			<AuthStack.Screen

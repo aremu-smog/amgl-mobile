@@ -30,8 +30,12 @@ export default function App() {
 	const notificationListener = useRef()
 	const responseListener = useRef()
 
-	const { currentlyRunning, isUpdateAvailable, isUpdatePending } =
-		Updates.useUpdates()
+	const {
+		currentlyRunning,
+		isUpdateAvailable,
+		isUpdatePending,
+		isDownloading,
+	} = Updates.useUpdates()
 
 	const isCurrentlyRunning = !!currentlyRunning
 
@@ -63,7 +67,7 @@ export default function App() {
 		}
 	}, [])
 
-	if (isCurrentlyRunning) {
+	if (isDownloading) {
 		return (
 			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 				<View>

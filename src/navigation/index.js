@@ -4,17 +4,11 @@ import AuthNavigator from "./auth.navigator"
 import { SafeAreaView, View, ActivityIndicator } from "react-native"
 
 import { useAuthContext } from "@/context/auth.context"
+import { Fragment } from "react"
 
 const Navigator = () => {
-	const { isAppReady, isAuthenticated } = useAuthContext()
+	const { isAuthenticated } = useAuthContext()
 
-	if (!isAppReady) {
-		return (
-			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-				<ActivityIndicator size='large' color='#ec1187' />
-			</View>
-		)
-	}
 	return (
 		<NavigationContainer>
 			{isAuthenticated ? (

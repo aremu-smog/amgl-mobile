@@ -11,7 +11,8 @@ const AuthNavigator = () => {
 			screenOptions={{
 				headerShown: false,
 				animation: "flip",
-			}}>
+			}}
+			initialRouteName={SCREEN_NAMES.LOGIN}>
 			<AuthStack.Screen name={SCREEN_NAMES.LOGIN} component={LoginScreen} />
 			<AuthStack.Screen
 				name={SCREEN_NAMES.REGISTER}

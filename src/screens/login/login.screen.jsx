@@ -60,7 +60,6 @@ const LoginScreen = ({ navigation }) => {
 
 					{!isLoggedIn && (
 						<Fragment>
-							(
 							<Input
 								placeholder='Email Address'
 								inputMode='email'

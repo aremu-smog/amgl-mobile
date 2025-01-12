@@ -14,12 +14,10 @@
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
 			"supportsTablet": true,
-			"bundleIdentifier": "com.aremu_smog.amglpof",
-			"infoPlist": [
-				{
-					"NSPhotoLibraryUsageDescription": "This app allow users to save images in the photo library"
-				}
-			],
+			"bundleIdentifier": "com.aremusmog.amglpof",
+			"infoPlist": {
+				"NSPhotoLibraryUsageDescription": "This app allow users to save images in the photo library"
+			},
 			"buildNumber": "1.0.0"
 		},
 		"android": {

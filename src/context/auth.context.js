@@ -8,6 +8,7 @@ const AuthContext = createContext()
 export const AuthContextProvider = ({ children }) => {
 	const [user, setUser] = useState(null)
 	const [isAppReady, setIsAppReady] = useState(false)
+	const [isTemporarilyLoggedOut, setIsTemporarilyLoggedOut] = useState(false)
 
 	const [currentSession, setCurrentSession] = useState(null)
 
@@ -117,12 +118,14 @@ export const AuthContextProvider = ({ children }) => {
 	return (
 		<AuthContext.Provider
 			value={{
-				isAuthenticated: !!currentSession,
+				isAuthenticated: !!currentSession && !isTemporarilyLoggedOut,
 				login,
 				register,
 				user,
 				setUser,
 				isAppReady,
+				setIsTemporarilyLoggedOut,
+				isTemporarilyLoggedOut,
 			}}>
 			{children}
 		</AuthContext.Provider>

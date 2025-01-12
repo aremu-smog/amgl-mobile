@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react"
 
 import { supabaseApp } from "@/api/supabase"
 import { Alert } from "react-native"
+import * as SplashScreen from "expo-splash-screen"
 
 const AuthContext = createContext()
 
@@ -18,6 +19,12 @@ export const AuthContextProvider = ({ children }) => {
 			setIsAppReady(true)
 		})
 	}, [])
+
+	useEffect(() => {
+		if (isAppReady) {
+			SplashScreen.hideAsync()
+		}
+	}, [isAppReady])
 
 	useEffect(() => {
 		const { user } = currentSession ?? {}

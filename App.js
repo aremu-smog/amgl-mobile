@@ -14,8 +14,11 @@ import QuestionsContextProvider from "./src/context/questions.context"
 import * as Updates from "expo-updates"
 const currentHeight = StatusBar.currentHeight
 import * as Notifications from "expo-notifications"
+import * as SplashScreen from "expo-splash-screen"
 
 const marginTop = Platform.OS === "android" ? currentHeight : 0
+
+SplashScreen.preventAutoHideAsync()
 
 Notifications.setNotificationHandler({
 	handleNotification: async () => ({
@@ -35,7 +38,13 @@ export default function App() {
 
 	useEffect(() => {
 		Updates.checkForUpdateAsync()
-	}, [isUpdateAvailable])
+	}, [])
+
+	useEffect(() => {
+		if (isUpdatePending) {
+			Updates.reloadAsync()
+		}
+	}, [isUpdatePending])
 
 	useEffect(() => {
 		if (isUpdateAvailable) {
@@ -59,7 +68,7 @@ export default function App() {
 		}
 	}, [])
 
-	if (isUpdatePending || isDownloading) {
+	if (isDownloading) {
 		return (
 			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 				<View>

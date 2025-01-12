@@ -30,26 +30,18 @@ export default function App() {
 	const notificationListener = useRef()
 	const responseListener = useRef()
 
-	const {
-		currentlyRunning,
-		isUpdateAvailable,
-		isUpdatePending,
-		isDownloading,
-	} = Updates.useUpdates()
-
-	const isCurrentlyRunning = !!currentlyRunning
+	const { isUpdateAvailable, isUpdatePending, isDownloading, isChecking } =
+		Updates.useUpdates()
 
 	useEffect(() => {
-		if (isUpdateAvailable) {
-			Updates.checkForUpdateAsync()
-		}
+		Updates.checkForUpdateAsync()
 	}, [isUpdateAvailable])
 
 	useEffect(() => {
-		if (isUpdatePending) {
+		if (isUpdateAvailable) {
 			Updates.fetchUpdateAsync()
 		}
-	}, [isUpdatePending])
+	}, [isUpdateAvailable])
 	useEffect(() => {
 		notificationListener.current =
 			Notifications.addNotificationReceivedListener(notification => {
@@ -67,7 +59,7 @@ export default function App() {
 		}
 	}, [])
 
-	if (isDownloading) {
+	if (isUpdatePending || isDownloading) {
 		return (
 			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 				<View>

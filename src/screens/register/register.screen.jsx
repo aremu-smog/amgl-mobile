@@ -4,22 +4,9 @@ import { useAuthContext } from "@/context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useNavigation } from "@react-navigation/native"
 import { Formik } from "formik"
-import * as Yup from "yup"
 import { SCREEN_NAMES } from "../names"
+import { registrationSchema } from "./config/register.schema"
 
-const registrationSchema = Yup.object().shape({
-	email: Yup.string()
-		.email("Please a enter a valid email")
-		.trim()
-		.required("Please enter your emaill"),
-	username: Yup.string()
-		.required("Please enter your username")
-		.trim("No spaces allowed"),
-	password: Yup.string()
-		.required("Please enter your password")
-		.min(3, "Password must be at least 3 characters long")
-		.trim(),
-})
 const RegisterScreen = () => {
 	const navigation = useNavigation()
 
@@ -29,9 +16,6 @@ const RegisterScreen = () => {
 
 	const { register } = useAuthContext()
 
-	// const onRegister = async () => {
-	// 	await register(email, password, username)
-	// }
 	return (
 		<Formik
 			initialValues={{ email: "", username: "", password: "" }}

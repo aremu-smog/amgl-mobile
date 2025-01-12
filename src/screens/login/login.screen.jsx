@@ -21,77 +21,76 @@ const LoginScreen = ({ navigation }) => {
 		navigation.navigate(SCREEN_NAMES.REGISTER)
 	}
 	return (
-		<View style={{ flex: 1 }}>
-			<Formik
-				initialValues={{ email: "", password: "" }}
-				validateOnChange={true}
-				validationSchema={loginSchema}
-				onSubmit={async values => {
-					const { email, password } = values
+		<Formik
+			initialValues={{ email: "", password: "" }}
+			validateOnChange={true}
+			validationSchema={loginSchema}
+			onSubmit={async values => {
+				const { email, password } = values
 
-					try {
-						await login(email, password)
-					} catch (e) {
-						console.warn(e)
-					}
-				}}>
-				{({
-					handleChange,
-					handleBlur,
-					handleSubmit,
-					isSubmitting,
-					touched,
-					errors,
-					isValid,
-				}) => (
-					<LinearGradient
-						colors={["#ec1187", "#ff8d10"]}
-						style={styles.container}>
-						<Text style={styles.title}>Welcome back</Text>
+				try {
+					await login(email, password)
+				} catch (e) {
+					console.warn(e)
+				}
+			}}>
+			{({
+				handleChange,
+				handleBlur,
+				handleSubmit,
+				isSubmitting,
+				touched,
+				errors,
+				isValid,
+			}) => (
+				<LinearGradient
+					colors={["#ec1187", "#ff8d10"]}
+					style={styles.container}>
+					<Text style={styles.title}>Welcome back</Text>
 
-						<Input
-							placeholder='Email Address'
-							inputMode='email'
-							autoCapitalize='none'
-							onBlur={handleBlur("email")}
-							onChangeText={handleChange("email")}
-							keyboardType='email-address'
-							errorMessage={errors.email && touched.email ? errors.email : ""}
-						/>
+					<Input
+						placeholder='Email Address'
+						inputMode='email'
+						autoCapitalize='none'
+						onBlur={handleBlur("email")}
+						onChangeText={handleChange("email")}
+						keyboardType='email-address'
+						errorMessage={errors.email && touched.email ? errors.email : ""}
+					/>
 
-						<Input
-							placeholder='Password'
-							autoCapitalize='none'
-							onBlur={handleBlur("password")}
-							onChangeText={handleChange("password")}
-							inputMode='text'
-							secureTextEntry={true}
-							errorMessage={
-								errors.password && touched.password ? errors.password : ""
-							}
-						/>
-						<Button
-							text='Login'
-							onPress={handleSubmit}
-							isLoading={isSubmitting && isValid}
-						/>
-						<View style={styles.info}>
-							<Text style={{ textAlign: "center", justifyContent: "center" }}>
-								Don't have an account yet?{" "}
+					<Input
+						placeholder='Password'
+						autoCapitalize='none'
+						onBlur={handleBlur("password")}
+						onChangeText={handleChange("password")}
+						inputMode='text'
+						secureTextEntry={true}
+						errorMessage={
+							errors.password && touched.password ? errors.password : ""
+						}
+					/>
+
+					<Button
+						text='Login'
+						onPress={handleSubmit}
+						isLoading={isSubmitting && isValid}
+					/>
+					<View style={styles.info}>
+						<Text style={{ textAlign: "center", justifyContent: "center" }}>
+							Don't have an account yet?{" "}
+						</Text>
+						<Pressable onPress={navigateToRegisterScreen} hitSlop={5}>
+							<Text
+								style={{
+									fontWeight: "bold",
+								}}>
+								Register
 							</Text>
-							<Pressable onPress={navigateToRegisterScreen} hitSlop={5}>
-								<Text
-									style={{
-										fontWeight: "bold",
-									}}>
-									Register
-								</Text>
-							</Pressable>
-						</View>
-					</LinearGradient>
-				)}
-			</Formik>
-		</View>
+						</Pressable>
+					</View>
+				</LinearGradient>
+			)}
+		</Formik>
 	)
 }
 

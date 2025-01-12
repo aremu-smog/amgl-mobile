@@ -19,7 +19,8 @@
 				{
 					"NSPhotoLibraryUsageDescription": "This app allow users to save images in the photo library"
 				}
-			]
+			],
+			"buildNumber": "1.0.0"
 		},
 		"android": {
 			"googleServicesFile": "./google-services.json",
@@ -32,7 +33,8 @@
 				"android.permission.POST_NOTIFICATIONS",
 				"android.permission.READ_EXTERNAL_STORAGE",
 				"android.permission.WRITE_EXTERNAL_STORAGE"
-			]
+			],
+			"versionCode": 1
 		},
 		"web": {
 			"favicon": "./src/assets/favicon.png"
@@ -53,7 +55,7 @@
 			]
 		],
 		"runtimeVersion": {
-			"policy": "appVersion"
+			"policy": "nativeVersion"
 		},
 		"updates": {
 			"url": "https://u.expo.dev/207aa48a-db6c-4185-8005-0bc8cd7351e1"

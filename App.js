@@ -23,22 +23,17 @@ export default function App() {
 	const notificationListener = useRef()
 	const responseListener = useRef()
 
-	const { isUpdateAvailable, isUpdatePending, isDownloading, isChecking } =
-		Updates.useUpdates()
+	const { isUpdateAvailable, isDownloading, isChecking } = Updates.useUpdates()
 
 	useEffect(() => {
 		Updates.checkForUpdateAsync()
 	}, [])
 
 	useEffect(() => {
-		if (isUpdatePending) {
-			Updates.reloadAsync()
-		}
-	}, [isUpdatePending])
-
-	useEffect(() => {
 		if (isUpdateAvailable) {
-			Updates.fetchUpdateAsync()
+			Updates.fetchUpdateAsync().then(() => {
+				Updates.reloadAsync()
+			})
 		}
 	}, [isUpdateAvailable])
 	useEffect(() => {

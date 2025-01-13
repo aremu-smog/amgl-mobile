@@ -24,10 +24,24 @@ export default function App() {
 	const responseListener = useRef()
 
 	const { isUpdateAvailable, isDownloading, isChecking } = Updates.useUpdates()
+	const [isAppReady, setIsAppReady] = useState(false)
 
+	/**
+	 * Check for updates when user's load the application
+	 */
 	useEffect(() => {
 		Updates.checkForUpdateAsync()
 	}, [])
+
+	/**
+	 * If we are not checking for updates and app is ready
+	 * Hide splash screen
+	 */
+	useEffect(() => {
+		if (!isChecking && isAppReady) {
+			SplashScreen.hideAsync()
+		}
+	}, [isChecking, isAppReady])
 
 	useEffect(() => {
 		if (isUpdateAvailable) {
@@ -53,6 +67,9 @@ export default function App() {
 		}
 	}, [])
 
+	/**
+	 * If we are downloading
+	 */
 	if (isDownloading) {
 		return (
 			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -65,7 +82,7 @@ export default function App() {
 	}
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
-			<AuthContextProvider>
+			<AuthContextProvider setIsAppReady={setIsAppReady}>
 				<QuestionsContextProvider>
 					<Navigator />
 				</QuestionsContextProvider>

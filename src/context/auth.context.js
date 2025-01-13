@@ -2,13 +2,11 @@ import { createContext, useContext, useState, useEffect } from "react"
 
 import { supabaseApp } from "@/api/supabase"
 import { Alert } from "react-native"
-import * as SplashScreen from "expo-splash-screen"
 
 const AuthContext = createContext()
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ setIsAppReady, children }) => {
 	const [user, setUser] = useState(null)
-	const [isAppReady, setIsAppReady] = useState(false)
 	const [isTemporarilyLoggedOut, setIsTemporarilyLoggedOut] = useState(false)
 
 	const [currentSession, setCurrentSession] = useState(null)
@@ -24,14 +22,7 @@ export const AuthContextProvider = ({ children }) => {
 	}, [])
 
 	useEffect(() => {
-		if (isAppReady) {
-			SplashScreen.hideAsync()
-		}
-	}, [isAppReady])
-
-	useEffect(() => {
 		const { user } = currentSession ?? {}
-
 		const { email, id } = user ?? {}
 
 		setUser({
@@ -135,7 +126,6 @@ export const AuthContextProvider = ({ children }) => {
 				register,
 				user,
 				setUser,
-				isAppReady,
 				setIsTemporarilyLoggedOut,
 				isTemporarilyLoggedOut,
 			}}>

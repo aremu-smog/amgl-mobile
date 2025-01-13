@@ -15,7 +15,10 @@ export const AuthContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		supabaseApp.auth.onAuthStateChange(async (e, session) => {
-			setCurrentSession(session)
+			if (session) {
+				setCurrentSession(session)
+				setIsTemporarilyLoggedOut(false)
+			}
 			setIsAppReady(true)
 		})
 	}, [])
@@ -68,10 +71,12 @@ export const AuthContextProvider = ({ children }) => {
 			password,
 		})
 
-		if (data) {
-		}
 		if (error) {
-			Alert.alert("Incorrect email/password, please try again")
+			Alert.alert(
+				isTemporarilyLoggedOut
+					? "Log in failed, kindly try again"
+					: "Incorrect email/password, please try again"
+			)
 			console.error(error)
 		}
 	}

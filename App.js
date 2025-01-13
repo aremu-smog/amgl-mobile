@@ -1,22 +1,12 @@
 import { useState, useRef, useEffect } from "react"
-import {
-	ActivityIndicator,
-	Platform,
-	Text,
-	StatusBar,
-	View,
-	StyleSheet,
-} from "react-native"
+import { ActivityIndicator, Text, View, StyleSheet } from "react-native"
 import Navigator from "./src/navigation"
 import { AuthContextProvider } from "./src/context/auth.context"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import QuestionsContextProvider from "./src/context/questions.context"
 import * as Updates from "expo-updates"
-const currentHeight = StatusBar.currentHeight
 import * as Notifications from "expo-notifications"
 import * as SplashScreen from "expo-splash-screen"
-
-const marginTop = Platform.OS === "android" ? currentHeight : 0
 
 SplashScreen.preventAutoHideAsync()
 

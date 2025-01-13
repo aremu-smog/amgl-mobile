@@ -18,6 +18,8 @@
 - [x] Error on register display (probably a toast?)
 - [x] Settings Screen, allow users to set profile pictures and logout screen?
 - [ ] Refactor Push Notification Approach
-- [ ] Rotate gradients, right now the gradients flow from top to bottom
+- [x] Rotate gradients, right now the gradients flow from top to bottom
 - [ ] Share Button on the Play Screen below each option
+- [x] Add temporary logout feature
+- [ ] Tempoarily log users out when they have being in the background for so long.
 - [ ] More will be added here...

@@ -1,19 +1,23 @@
 import { NavigationContainer } from "@react-navigation/native"
 import AppNavigator from "./app.navigator"
 import AuthNavigator from "./auth.navigator"
-import { SafeAreaView, View, ActivityIndicator } from "react-native"
+import { SafeAreaView, StatusBar } from "react-native"
+import { StatusBar as StatusBarExpo } from "expo-status-bar"
 
 import { useAuthContext } from "@/context/auth.context"
-import { Fragment } from "react"
+import { useOS } from "@/hooks"
 
 const Navigator = () => {
 	const { isAuthenticated } = useAuthContext()
+	const { isAndroid } = useOS()
 
+	const currentHeight = isAndroid ? StatusBar.currentHeight : 0
 	return (
 		<NavigationContainer>
 			{isAuthenticated ? (
-				<SafeAreaView style={{ flex: 1 }}>
+				<SafeAreaView style={{ flex: 1, paddingTop: currentHeight }}>
 					<AppNavigator />
+					<StatusBarExpo style='dark' backgroundColor='#fff' />
 				</SafeAreaView>
 			) : (
 				<AuthNavigator />

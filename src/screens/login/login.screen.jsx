@@ -28,16 +28,11 @@ const LoginScreen = ({ navigation }) => {
 
 	return (
 		<Formik
-			initialValues={{ password: "", email: "" }}
+			initialValues={{ password: "", email: isLoggedIn ? user?.email : "" }}
 			validateOnChange={true}
 			{...(!isLoggedIn && { validationSchema: loginSchema })}
 			onSubmit={async values => {
-				if (isLoggedIn) {
-					setIsTemporarilyLoggedOut(false)
-					return
-				}
 				const { email, password } = values
-
 				try {
 					await login(email, password)
 				} catch (e) {
@@ -69,22 +64,22 @@ const LoginScreen = ({ navigation }) => {
 								keyboardType='email-address'
 								errorMessage={errors.email && touched.email ? errors.email : ""}
 							/>
-							<Input
-								placeholder='Password'
-								autoCapitalize='none'
-								onBlur={handleBlur("password")}
-								onChangeText={handleChange("password")}
-								inputMode='text'
-								secureTextEntry={true}
-								errorMessage={
-									errors.password && touched.password ? errors.password : ""
-								}
-							/>
 						</Fragment>
 					)}
 
+					<Input
+						placeholder='Password'
+						autoCapitalize='none'
+						onBlur={handleBlur("password")}
+						onChangeText={handleChange("password")}
+						inputMode='text'
+						secureTextEntry={true}
+						errorMessage={
+							errors.password && touched.password ? errors.password : ""
+						}
+					/>
 					<Button
-						text={isLoggedIn ? "Back to App" : "Login"}
+						text={"Login"}
 						onPress={handleSubmit}
 						isLoading={isSubmitting && isValid}
 						style={{

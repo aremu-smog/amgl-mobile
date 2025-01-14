@@ -40,26 +40,26 @@ const MessagesScreen = () => {
 			fetchResponses()
 		}, [])
 	)
-	useFocusEffect(
-		useCallback(() => {
-			if (!user.push_notification_enabled && Device.isDevice) {
-				/**
-				 * Update Logic for PN enabling and disabling
-				 */
-				Alert.alert(
-					"Never miss a message",
-					"Get notified when new messages are sent to you",
+	// useFocusEffect(
+	// 	useCallback(() => {
+	// 		if (!user.push_notification_enabled && Device.isDevice) {
+	// 			/**
+	// 			 * Update Logic for PN enabling and disabling
+	// 			 */
+	// 			Alert.alert(
+	// 				"Never miss a message",
+	// 				"Get notified when new messages are sent to you",
 
-					[
-						{
-							text: "Enable Push Notification",
-							onPress: enablePushNotification,
-						},
-					]
-				)
-			}
-		}, [user])
-	)
+	// 				[
+	// 					{
+	// 						text: "Enable Push Notification",
+	// 						onPress: enablePushNotification,
+	// 					},
+	// 				]
+	// 			)
+	// 		}
+	// 	}, [user])
+	// )
 
 	if (isLoading) {
 		return <MessagesLoading />

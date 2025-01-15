@@ -20,6 +20,9 @@ export const useEnablePushNotification = () => {
 	const user_id = user?.id
 	const enablePushNotification = useCallback(() => {
 		registerForPushNotificationsAsync(isAndroid).then(async token => {
+			if (!token) {
+				return
+			}
 			try {
 				const { data, error } = await supabaseApp
 					.from("push_notifications")

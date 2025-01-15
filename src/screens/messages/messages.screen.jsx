@@ -1,31 +1,20 @@
 import { useCallback } from "react"
-import {
-	StyleSheet,
-	Image,
-	FlatList,
-	TouchableOpacity,
-	Alert,
-} from "react-native"
+import { StyleSheet, Image, FlatList, TouchableOpacity } from "react-native"
 import { useAuthContext } from "@/context/auth.context"
 import { LinearGradient } from "expo-linear-gradient"
 import { useFocusEffect } from "@react-navigation/native"
 import { MessagesLoading, NoMessages } from "./components"
 
 import {
+	useCheckPushNotificationStatus,
 	useDetailsPage,
-	useEnablePushNotification,
 	useResponses,
 } from "./hooks"
-import * as Device from "expo-device"
-import { useOS } from "@/hooks"
 
 const loveIconSrc = require("@/assets/love-letter.png")
 
 const MessagesScreen = () => {
 	const { user } = useAuthContext()
-
-	const { enablePushNotification } = useEnablePushNotification()
-	const { isAndroid } = useOS()
 
 	const user_id = user?.id
 	const { isFetching, messages, fetchResponses } = useResponses({ user_id })
@@ -35,31 +24,12 @@ const MessagesScreen = () => {
 	const doesNotHaveMessages = !messages.length
 	const isLoading = isFetching && doesNotHaveMessages
 
+	useCheckPushNotificationStatus()
 	useFocusEffect(
 		useCallback(() => {
 			fetchResponses()
 		}, [])
 	)
-	// useFocusEffect(
-	// 	useCallback(() => {
-	// 		if (!user.push_notification_enabled && Device.isDevice) {
-	// 			/**
-	// 			 * Update Logic for PN enabling and disabling
-	// 			 */
-	// 			Alert.alert(
-	// 				"Never miss a message",
-	// 				"Get notified when new messages are sent to you",
-
-	// 				[
-	// 					{
-	// 						text: "Enable Push Notification",
-	// 						onPress: enablePushNotification,
-	// 					},
-	// 				]
-	// 			)
-	// 		}
-	// 	}, [user])
-	// )
 
 	if (isLoading) {
 		return <MessagesLoading />

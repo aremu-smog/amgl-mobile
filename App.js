@@ -45,9 +45,7 @@ export default function App() {
 
 	useEffect(() => {
 		if (isUpdateAvailable) {
-			Updates.fetchUpdateAsync().then(() => {
-				Updates.reloadAsync()
-			})
+			Updates.fetchUpdateAsync()
 		}
 	}, [isUpdateAvailable])
 	useEffect(() => {
@@ -75,7 +73,7 @@ export default function App() {
 			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
 				<View>
 					<ActivityIndicator size='small' color='#ec1187' />
-					<Text style={style.updateText}>Updating your app</Text>
+					<Text style={style.updateText}>Downloading updates.</Text>
 				</View>
 			</View>
 		)

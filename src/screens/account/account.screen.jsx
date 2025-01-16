@@ -62,7 +62,6 @@ const AccountScreen = () => {
 							fontWeight: "600",
 							textTransform: "uppercase",
 							textAlign: "center",
-							// marginVertical: 20,
 						}}>
 						{user?.username}
 					</Text>

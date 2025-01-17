@@ -1,14 +1,26 @@
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useContext, useState, useEffect, useRef } from "react"
 
 import { supabaseApp } from "@/api/supabase"
-import { Alert } from "react-native"
+import { Alert, AppState } from "react-native"
 
 const AuthContext = createContext()
 
 export const AuthContextProvider = ({ setIsAppReady, children }) => {
 	const [user, setUser] = useState(null)
 	const [isTemporarilyLoggedOut, setIsTemporarilyLoggedOut] = useState(false)
+	const appState = useRef(AppState.currentState)
 
+	useEffect(() => {
+		AppState.addEventListener("change", nextAppState => {
+			if (
+				(appState.current === "inactive") |
+				(appState.current === "background")
+			) {
+				setIsTemporarilyLoggedOut(true)
+			}
+			appState.current = nextAppState
+		})
+	}, [])
 	const [currentSession, setCurrentSession] = useState(null)
 
 	useEffect(() => {

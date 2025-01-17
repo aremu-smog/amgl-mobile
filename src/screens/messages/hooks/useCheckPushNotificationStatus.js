@@ -3,13 +3,13 @@ const { useEnablePushNotification } = require("./useEnablePushNotification")
 import { useFocusEffect } from "@react-navigation/native"
 import * as Notifications from "expo-notifications"
 import { Alert } from "react-native"
+import * as Device from "expo-device"
 
 export const useCheckPushNotificationStatus = () => {
 	const { enablePushNotification } = useEnablePushNotification()
 	useFocusEffect(
 		useCallback(() => {
 			const checkStatus = async () => {
-				console.log("Focused")
 				const {
 					granted,
 					ios = {},
@@ -23,7 +23,7 @@ export const useCheckPushNotificationStatus = () => {
 				/**
 				 * Push notification not granted an OS level
 				 */
-				if (!isGranted) {
+				if (!isGranted && Device.isDevice) {
 					Alert.alert(
 						"Never miss a message",
 						"Get notified when new messages are sent to you",

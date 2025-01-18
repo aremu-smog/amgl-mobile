@@ -9,13 +9,31 @@ import { useAuthContext } from "@/context/auth.context"
 import { useQuestionsContext } from "@/context/questions.context"
 import { WEBSITE_BASE_URL } from "@env"
 import { PageLoader } from "@/components"
+import { useNavigation } from "@react-navigation/native"
 
 const PlayScreen = () => {
 	const { questions, setQuestions } = useQuestionsContext()
 	const hasQuestions = questions.length > 0
 
-	const { user } = useAuthContext()
+	const { user, currentRoute } = useAuthContext()
 	const { username } = user ?? {}
+	const navigation = useNavigation()
+
+	useEffect(() => {
+		if (currentRoute.current) {
+			console.log(currentRoute.current)
+			let timer = setTimeout(() => {
+				const params = currentRoute.current?.params
+				navigation.navigate(currentRoute.current.name, {
+					...(Boolean(params) && params),
+				})
+			}, 100)
+
+			return () => {
+				clearTimeout(timer)
+			}
+		}
+	}, [])
 
 	const fetchQuestions = async _username => {
 		const { data, error } = await supabaseApp

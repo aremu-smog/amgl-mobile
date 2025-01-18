@@ -6,6 +6,7 @@ import { Formik } from "formik"
 import * as Yup from "yup"
 import { SCREEN_NAMES } from "../names"
 import { Fragment } from "react"
+import { useNavigation } from "@react-navigation/native"
 
 const loginSchema = Yup.object().shape({
 	email: Yup.string()
@@ -15,9 +16,10 @@ const loginSchema = Yup.object().shape({
 		.min(3, "Too short!")
 		.required("Please enter your password"),
 })
-const LoginScreen = ({ navigation }) => {
-	const { login, user, setIsTemporarilyLoggedOut } = useAuthContext()
+const LoginScreen = () => {
+	const { login, user } = useAuthContext()
 
+	const navigation = useNavigation()
 	const isLoggedIn = Boolean(user?.email)
 
 	const navigateToRegisterScreen = () => {

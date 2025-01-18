@@ -9,6 +9,7 @@ export const AuthContextProvider = ({ setIsAppReady, children }) => {
 	const [user, setUser] = useState(null)
 	const [isTemporarilyLoggedOut, setIsTemporarilyLoggedOut] = useState(false)
 	const appState = useRef(AppState.currentState)
+	const currentRoute = useRef(null)
 
 	useEffect(() => {
 		AppState.addEventListener("change", nextAppState => {
@@ -140,6 +141,7 @@ export const AuthContextProvider = ({ setIsAppReady, children }) => {
 				setUser,
 				setIsTemporarilyLoggedOut,
 				isTemporarilyLoggedOut,
+				currentRoute,
 			}}>
 			{children}
 		</AuthContext.Provider>

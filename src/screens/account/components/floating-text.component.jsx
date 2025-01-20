@@ -21,7 +21,7 @@ export const FloatingText = ({ text, delay, containerHeight }) => {
 	)
 
 	const positionTop = useSharedValue(-200)
-	const OFFSET = containerHeight
+	const OFFSET = containerHeight + 200
 
 	const updateRandomValues = () => {
 		const randomAngle = generateRandomAngle()

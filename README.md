@@ -21,5 +21,6 @@
 - [x] Rotate gradients, right now the gradients flow from top to bottom
 - [ ] Share Button on the Play Screen below each option
 - [x] Add temporary logout feature
-- [ ] Tempoarily log users out when they have being in the background for so long.
+- [x] Tempoarily log users out when they have being in the background for so long.
+- [ ] Allow users to share image
 - [ ] More will be added here...

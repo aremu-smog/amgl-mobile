@@ -21,7 +21,6 @@ const PlayScreen = () => {
 
 	useEffect(() => {
 		if (currentRoute.current) {
-			console.log(currentRoute.current)
 			let timer = setTimeout(() => {
 				const params = currentRoute.current?.params
 				navigation.navigate(currentRoute.current.name, {
